@@ -4,7 +4,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   CardTitle,
   Table,
   Row,
@@ -13,7 +12,7 @@ import {
 } from "reactstrap";
 // core components
 
-function Dashboard() {
+const Dashboard = () => {
   return (
     <>
       <div className="content">
@@ -137,6 +136,6 @@ function Dashboard() {
       </div>
     </>
   );
-}
+};
 
 export default Dashboard;

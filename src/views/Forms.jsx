@@ -11,10 +11,9 @@ import {
   Input,
   Form,
   FormGroup,
-  Label,
 } from "reactstrap";
 
-const Map = () => {
+const Forms = () => {
   return (
     <>
       <div className="content">
@@ -177,4 +176,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default Forms;

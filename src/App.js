@@ -1,14 +1,32 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import AdminLayout from "layouts/Admin.js";
+
+//Component Imports
+import DemoNavbar from "components/DemoNavbar";
+import Sidebar from "components/Sidebar";
+import Footer from "components/Footer";
+import Dashboard from "views/Dashboard";
+import Forms from "views/Forms";
 
 const App = () => {
+  const mainPanel = React.useRef();
   return (
     <div>
-      <Routes>
-        <Route path="/admin/*" element={<AdminLayout />} />
-        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
-      </Routes>
+      <div className="wrapper">
+        <Sidebar />
+        <div className="main-panel" ref={mainPanel}>
+          <DemoNavbar /> {/*{...props}*/}
+          <Routes>
+            <Route path="/admin/dashboard" Component={Dashboard} />
+            <Route path="/admin/forms" Component={Forms} />
+            <Route
+              path="/"
+              element={<Navigate to="/admin/dashboard" replace />}
+            />
+          </Routes>
+          <Footer fluid />
+        </div>
+      </div>
     </div>
   );
 };
