@@ -16,7 +16,7 @@ import {
   InputGroupText,
 } from "reactstrap";
 // Icons
-import { Delete, Search, Update } from "@mui/icons-material";
+import { Delete, Search, Update, Edit } from "@mui/icons-material";
 import { CircularProgress, IconButton, TextField } from "@mui/material";
 
 // Actions
@@ -34,22 +34,65 @@ const Dashboard = () => {
   const { loadingSkills, skillsError, skills } = skillsList;
   const loading = loadingUsers && loadingBadges && loadingSkills;
 
-  const userSearchHandler = () => {
-    console.log("working");
-  };
-  const skillSearchHandler = () => {
-    console.log("working");
-  };
-  const badgeSearchHandler = () => {
-    console.log("working");
+  //USER SEARCH HANDLING
+  const [userSearch, setUserSearch] = useState("");
+  const [searchedUser, setSearchedUser] = useState("");
+
+  const userSearchHandler = (e) => {
+    const searchQuery = e.target.value.toLowerCase();
+    setUserSearch(searchQuery);
+
+    const foundUsers = usersList.users.filter((user) =>
+      user.name.toLowerCase().includes(searchQuery)
+    );
+    setSearchedUser(foundUsers);
   };
 
+  const userTableData =
+    searchedUser.length > 0 ? searchedUser : usersList.users;
+
+  //BADGE SEARCH HANDLING
+  const [badgeSearch, setBadgeSearch] = useState("");
+  const [searchedBadges, setSearchedBadges] = useState([]);
+
+  const badgeSearchHandler = (e) => {
+    const searchQuery = e.target.value.toLowerCase();
+    setBadgeSearch(searchQuery);
+
+    const foundBadges = badgesList.badges.filter((badge) =>
+      badge.badge_name.toLowerCase().includes(searchQuery)
+    );
+    setSearchedBadges(foundBadges);
+  };
+
+  const badgeTableData =
+    searchedBadges.length > 0 ? searchedBadges : badgesList.badges;
+
+  //SKILL SEARCH HANDLING
+  const [skillSearch, setSkillSearch] = useState("");
+  const [searchedSkills, setSearchedSkills] = useState([]);
+
+  const skillSearchHandler = (e) => {
+    const searchQuery = e.target.value.toLowerCase();
+    setSkillSearch(searchQuery);
+
+    const foundSkills = skillsList.skills.filter((skill) =>
+      skill.skill_name.toLowerCase().includes(searchQuery)
+    );
+    setSearchedSkills(foundSkills);
+  };
+
+  const skillTableData =
+    searchedSkills.length > 0 ? searchedSkills : skillsList.skills;
+
+  /*----------USE EFFECT-----------*/
   useEffect(() => {
     dispatch(listUsers());
     dispatch(listBadges());
     dispatch(listSkills());
   }, [dispatch]);
 
+  /*----------DASHBOARD RENDER-----------*/
   return (
     <>
       <div className="content">
@@ -64,13 +107,13 @@ const Dashboard = () => {
                   <Col md="4"></Col>
                   <Col md="4" className="d-flex justify-content-end">
                     <InputGroup>
-                      <Input placeholder="Search..." />
+                      <Input
+                        placeholder="Search..."
+                        value={userSearch}
+                        onChange={userSearchHandler}
+                      />
                       <InputGroupAddon addonType="append">
-                        <Button
-                          color="primary"
-                          onClick={userSearchHandler}
-                          className="m-0"
-                        >
+                        <Button color="primary" className="m-0">
                           <Search />
                         </Button>
                       </InputGroupAddon>
@@ -98,7 +141,7 @@ const Dashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {users.map((user) => (
+                      {userTableData.map((user) => (
                         <tr key={user._id}>
                           <td>{user.name}</td>
                           <td>{user.email}</td>
@@ -114,7 +157,7 @@ const Dashboard = () => {
                                   <Delete />
                                 </Button>
                                 <Button className=" m-1" color="success">
-                                  <Update />
+                                  <Edit />
                                 </Button>
                               </div>
                             </Row>
@@ -136,13 +179,13 @@ const Dashboard = () => {
                   </Col>
                   <Col md="7" className="d-flex justify-content-end">
                     <InputGroup>
-                      <Input placeholder="Search..." />
+                      <Input
+                        placeholder="Search..."
+                        value={skillSearch}
+                        onChange={skillSearchHandler}
+                      />
                       <InputGroupAddon addonType="append">
-                        <Button
-                          color="primary"
-                          onClick={skillSearchHandler}
-                          className="m-0"
-                        >
+                        <Button color="primary" className="m-0">
                           <Search />
                         </Button>
                       </InputGroupAddon>
@@ -164,7 +207,7 @@ const Dashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {skills.map((skill) => (
+                      {skillTableData.map((skill) => (
                         <tr key={skill._id}>
                           <td>{skill.skill_name}</td>
                           <td>{skill.skill_pic_url}</td>
@@ -174,7 +217,7 @@ const Dashboard = () => {
                                 <Delete />
                               </Button>
                               <Button className=" m-1" color="success">
-                                <Update />
+                                <Edit />
                               </Button>
                             </Row>
                           </td>
@@ -195,13 +238,13 @@ const Dashboard = () => {
                   </Col>
                   <Col md="7" className="d-flex justify-content-end">
                     <InputGroup>
-                      <Input placeholder="Search..." />
+                      <Input
+                        placeholder="Search..."
+                        value={badgeSearch}
+                        onChange={badgeSearchHandler}
+                      />
                       <InputGroupAddon addonType="append">
-                        <Button
-                          color="primary"
-                          onClick={badgeSearchHandler}
-                          className="m-0"
-                        >
+                        <Button color="primary" className="m-0">
                           <Search />
                         </Button>
                       </InputGroupAddon>
@@ -223,7 +266,7 @@ const Dashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {badges.map((badge) => (
+                      {badgeTableData.map((badge) => (
                         <tr key={badge._id}>
                           <td>{badge.badge_name}</td>
                           <td>{badge.badge_pic_url}</td>
@@ -233,7 +276,7 @@ const Dashboard = () => {
                                 <Delete />
                               </Button>
                               <Button className=" m-1" color="success">
-                                <Update />
+                                <Edit />
                               </Button>
                             </Row>
                           </td>
