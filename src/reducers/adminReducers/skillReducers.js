@@ -35,3 +35,18 @@ export const skillCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const skillUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SKILL_CREATE_REQUEST:
+      return { loading: true };
+    case SKILL_CREATE_SUCCESS:
+      return { loading: false, skillUpdateSuccess: true, skill: action.payload };
+    case SKILL_CREATE_FAIL:
+      return { loading: false, skillUpdateError: action.payload };
+    case SKILL_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

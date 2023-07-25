@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   Card,
@@ -26,6 +27,7 @@ import { listSkills } from "actions/adminActions/skillActions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const usersList = useSelector((state) => state.usersList);
   const badgesList = useSelector((state) => state.badgesList);
   const skillsList = useSelector((state) => state.skillsList);
@@ -46,6 +48,10 @@ const Dashboard = () => {
       user.name.toLowerCase().includes(searchQuery)
     );
     setSearchedUser(foundUsers);
+  };
+
+  const userEditHandler = (id) => {
+    navigate(`/admin/updateuser/${id}`);
   };
 
   const userTableData =
@@ -156,7 +162,11 @@ const Dashboard = () => {
                                 <Button className=" m-1" color="danger">
                                   <Delete />
                                 </Button>
-                                <Button className=" m-1" color="success">
+                                <Button
+                                  className=" m-1"
+                                  color="success"
+                                  onClick={() => userEditHandler(user._id)}
+                                >
                                   <Edit />
                                 </Button>
                               </div>

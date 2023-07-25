@@ -18,9 +18,9 @@ const App = () => {
         <div className="main-panel" ref={mainPanel}>
           <DemoNavbar /> {/*{...props}*/}
           <Routes>
+            <Route path="/admin/updateuser/:id" Component={UpdateUser} />
             <Route path="/admin/dashboard" Component={Dashboard} />
             <Route path="/admin/forms" Component={Forms} />
-            <Route path="/admin/updateuser" Component={UpdateUser} />
             <Route
               path="/"
               element={<Navigate to="/admin/dashboard" replace />}

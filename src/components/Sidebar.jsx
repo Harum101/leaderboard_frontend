@@ -62,7 +62,7 @@ function Sidebar(props) {
                   activeRoute(prop.path) + (prop.pro ? "active-pro" : "")
                 }
                 key={key} */}
-            <NavLink exact to="/admin/dashboard" className="nav-NavLink">
+            <NavLink to="/admin/dashboard" className="nav-NavLink">
               <i className="nc-icon nc-bank" />
               <p>Dashboard</p>
             </NavLink>

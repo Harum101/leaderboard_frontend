@@ -13,6 +13,7 @@ import {
 import {
   skillsListReducer,
   skillCreateReducer,
+  skillUpdateReducer,
 } from "reducers/adminReducers/skillReducers";
 
 const reducers = combineReducers({
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   userCreate: userCreateReducer,
   badgeCreate: badgeCreateReducer,
   skillCreate: skillCreateReducer,
+  skillUpdate: skillUpdateReducer,
 });
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems")
