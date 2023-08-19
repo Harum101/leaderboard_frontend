@@ -35,8 +35,8 @@ const DevelopersTable = () => {
 
     console.log(users);
 
-    const foundUsers = allUserSkills.users.filter((user) =>
-      user.name.toLowerCase().includes(searchQuery)
+    const foundUsers = allUserSkills.users.filter((entry) =>
+      entry.user.name.toLowerCase().includes(searchQuery)
     );
 
     setSearchedUser(foundUsers);
