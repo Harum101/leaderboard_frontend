@@ -32,30 +32,28 @@ export const listBadges = () => async (dispatch) => {
 };
 
 export const createBadge =
-  ({ badgeName, badgeImageLink }) =>
+  ({ badgeName, badgeImage }) =>
   async (dispatch) => {
     try {
       dispatch({ type: BADGE_CREATE_REQUEST });
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
+          "Content-Type": "multipart-formdata",
         },
       };
 
-      await axios.post(
-        "/badges/create",
-        {
-          badge_name: badgeName,
-          badge_pic_url: badgeImageLink,
-        },
-        config
-      );
+      const formdata = new FormData();
+      formdata.append("badge_name", badgeName);
+      formdata.append("badge_image", badgeImage);
+
+      await axios.post("/badges/create", formdata, config);
 
       dispatch({
         type: BADGE_CREATE_SUCCESS,
         payload: {
           badge_name: badgeName,
-          badge_pic_url: badgeImageLink,
+          badge_pic_url: badgeImage,
         },
       });
     } catch (error) {

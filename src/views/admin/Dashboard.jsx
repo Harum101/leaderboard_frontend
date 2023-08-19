@@ -279,7 +279,14 @@ const Dashboard = () => {
                       {badgeTableData.map((badge) => (
                         <tr key={badge._id}>
                           <td>{badge.badge_name}</td>
-                          <td>{badge.badge_pic_url}</td>
+                          <td>
+                            <img
+                              src={`/images/${badge.badge_image}`}
+                              alt={badge.badge_name}
+                              style={{ width: "50px" }}
+                              rounded
+                            />
+                          </td>
                           <td>
                             <Row>
                               <Button className=" m-1" color="danger">

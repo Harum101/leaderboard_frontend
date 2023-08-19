@@ -19,23 +19,35 @@ import { Alert } from "@mui/material";
 
 const BadgeForm = () => {
   const [badgeName, setBadgeName] = useState();
-  const [badgeImageLink, setBadgeImageLink] = useState();
+  const [badgeImageLocal, setBadgeImageLocal] = useState();
+  const [badgeImage, setBadgeImage] = useState();
   // FUNCTIONALITIES
   const dispatch = useDispatch();
   const badgeCreate = useSelector((state) => state.badgeCreate);
   const { badge, badgeSuccess, badgeError } = badgeCreate;
 
+  const convertToBase64 = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setBadgeImageLocal(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+  };
+
   const alertHandler = () => {
     if (badge) {
       dispatch({ type: BADGE_CREATE_RESET });
       setBadgeName("");
-      setBadgeImageLink("");
+      setBadgeImage("");
     }
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createBadge({ badgeName, badgeImageLink }));
+    dispatch(createBadge({ badgeName, badgeImage }));
   };
 
   return (
@@ -55,7 +67,7 @@ const BadgeForm = () => {
           <CardTitle tag="h5">Badges Form</CardTitle>
         </CardHeader>
         <CardBody>
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={submitHandler} encType="multipart/form-data">
             <Row>
               <Col className="pr-1" md="5">
                 <FormGroup>
@@ -70,16 +82,30 @@ const BadgeForm = () => {
               </Col>
               <Col className="pl-1" md="7">
                 <FormGroup>
-                  <label>Badge Image Link</label>
+                  <label>Badge Image</label>
                   <Input
-                    placeholder="Image URL"
-                    value={badgeImageLink}
-                    type="text"
-                    onChange={(e) => setBadgeImageLink(e.target.value)}
+                    type="file"
+                    onChange={(e) => {
+                      setBadgeImage(e.target.files[0]);
+                      convertToBase64(e);
+                    }}
+                    // (e) => setBadgeImage(e.target.value)
+                    className="border p-1 rounded"
                   />
                 </FormGroup>
               </Col>
             </Row>
+            {badgeImageLocal && (
+              <Row>
+                <div className="d-flex justify-content-center">
+                  <img
+                    src={badgeImageLocal}
+                    alt="badge"
+                    style={{ width: "100px" }}
+                  />
+                </div>
+              </Row>
+            )}
             <Row>
               <div className="update ml-auto mr-auto">
                 <Button className="btn-round" color="primary" type="submit">

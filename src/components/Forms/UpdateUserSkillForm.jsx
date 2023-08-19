@@ -5,18 +5,18 @@ import { Divider } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 const UpdateUserSkillForm = () => {
-  // userId, skillId, skillLevel, avatarLink, score
+  // userId, skillId, skillLevel, nftLink, score
   const skillsList = useSelector((state) => state.skillsList);
   //COMPONENT LEVEL STATES
   const { id: userId } = useParams();
   const [skillId, setSkillId] = useState("");
   const [skillLevel, setSkillLevel] = useState("beginner");
-  const [avatarLink, setAvatarLink] = useState("");
+  const [nftLink, setNFTLink] = useState("");
   const [score, setScore] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // console.log(userId, skillId, skillLevel, avatarLink, score);
+    // console.log(userId, skillId, skillLevel, nftLink, score);
   };
 
   return (
@@ -60,12 +60,12 @@ const UpdateUserSkillForm = () => {
         </Row>
         <Row className="mt-2">
           <Col md="6">
-            <label>Avatar Link: </label>
+            <label>NFT Link: </label>
             <Input
               type="text"
-              placeholder="Avatar Link"
-              value={avatarLink}
-              onChange={(e) => setAvatarLink(e.target.value)}
+              placeholder="NFT Link"
+              value={nftLink}
+              onChange={(e) => setNFTLink(e.target.value)}
             />
           </Col>
           <Col md="6">
@@ -81,7 +81,7 @@ const UpdateUserSkillForm = () => {
         <Row className="mt-3">
           <div className="update ml-auto mr-auto">
             <Button className="btn-round" color="primary" type="submit">
-              Update Skill
+              Add Skill
             </Button>
           </div>
         </Row>

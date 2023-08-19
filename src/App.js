@@ -1,34 +1,19 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
-//Component Imports
-import DemoNavbar from "components/DemoNavbar";
-import Sidebar from "components/Sidebar";
-import Footer from "components/Footer";
-import Dashboard from "views/Dashboard";
-import Forms from "views/Forms";
-import UpdateUser from "views/UpdateUser";
+import AdminRoutes from "routes/AdminRoutes"; // Import admin routes
+import LeaderboardRoutes from "routes/LeaderboardRoutes"; // Import leaderboard routes
 
 const App = () => {
-  const mainPanel = React.useRef();
+  const isAdminRoute = (pathname) => {
+    return pathname.startsWith("/admin");
+  };
+
   return (
     <BrowserRouter>
-      <div className="wrapper">
-        <Sidebar />
-        <div className="main-panel" ref={mainPanel}>
-          <DemoNavbar /> {/*{...props}*/}
-          <Routes>
-            <Route path="/admin/updateuser/:id" Component={UpdateUser} />
-            <Route path="/admin/dashboard" Component={Dashboard} />
-            <Route path="/admin/forms" Component={Forms} />
-            <Route
-              path="/"
-              element={<Navigate to="/admin/dashboard" replace />}
-            />
-          </Routes>
-          <Footer fluid />
-        </div>
-      </div>
+      <LeaderboardRoutes /> {/* Render leaderboard routes */}
+      {isAdminRoute(window.location.pathname) && <AdminRoutes />}{" "}
+      {/* Render admin routes */}
     </BrowserRouter>
   );
 };
