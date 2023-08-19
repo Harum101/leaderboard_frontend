@@ -1,7 +1,14 @@
 import axios from "axios";
-import { USER_SKILL_UPDATE_FAIL } from "constants/adminConstants";
-import { USER_SKILL_UPDATE_SUCCESS } from "constants/adminConstants";
-import { USER_SKILL_UPDATE_REQUEST } from "constants/adminConstants";
+import {
+  ALL_USERS_SKILLS_SUCCESS,
+  ALL_USERS_SKILLS_REQUEST,
+  ALL_USERS_SKILLS_FAIL,
+} from "constants/leaderboardConstants";
+import {
+  USER_SKILL_UPDATE_REQUEST,
+  USER_SKILL_UPDATE_SUCCESS,
+  USER_SKILL_UPDATE_FAIL,
+} from "constants/adminConstants";
 
 export const updateUserSkill =
   ({ userId: id, skillId, skillLevel, nftLink, score }) =>
@@ -45,3 +52,24 @@ export const updateUserSkill =
       });
     }
   };
+
+export const getAllUserSkills = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_USERS_SKILLS_REQUEST });
+
+    const { data } = await axios.get(`/users/get-all-skills`);
+
+    dispatch({
+      type: ALL_USERS_SKILLS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_USERS_SKILLS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

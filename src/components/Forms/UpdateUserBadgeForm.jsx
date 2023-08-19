@@ -1,15 +1,23 @@
 import { Divider } from "@mui/material";
+import { addBadge } from "actions/adminActions/userActions";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Button, Col, Row, Form, ButtonGroup } from "reactstrap";
 
 const UpdateUserBadgeForm = () => {
+  const dispatch = useDispatch();
   const badgesList = useSelector((state) => state.badgesList);
   const [badgeImage, setBadgeImage] = useState("");
+  const { id: userId } = useParams();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("Submitted");
+    const foundBadge = badgesList.badges.find(
+      (i) => i.badge_image === badgeImage
+    );
+    const badgeId = foundBadge._id;
+    dispatch(addBadge({ userId, badgeId }));
   };
   return (
     <div>

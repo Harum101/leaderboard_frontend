@@ -18,6 +18,9 @@ import { CardMedia, Chip } from "@mui/material";
 import { Col, Row } from "reactstrap";
 import { AutoGraph, Psychology, Stars } from "@mui/icons-material";
 import DevelopersTable from "components/LeaderboardComponents/DevelopersTable";
+import { useDispatch } from "react-redux";
+
+//ACTIONS IMPORTS
 
 // COPYRIGHT FUNCTION
 function Copyright(props) {
@@ -69,6 +72,7 @@ const footers = [
 ];
 
 const Landing = () => {
+  const dispatch = useDispatch();
   return (
     // <ThemeProvider theme={defaultTheme}>
     <div
@@ -115,10 +119,7 @@ const Landing = () => {
                 },
               }}
             >
-              <CardMedia
-                sx={{ height: 180 }}
-                image={joe}
-              />
+              <CardMedia sx={{ height: 180 }} image={joe} />
               <CardContent>
                 <Typography
                   gutterBottom

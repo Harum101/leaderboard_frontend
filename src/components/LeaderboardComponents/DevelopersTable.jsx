@@ -17,13 +17,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 //Actions
-import { listUsers } from "actions/adminActions/userActions";
+// import { listUsers } from "actions/adminActions/userActions";
+import { getAllUserSkills } from "actions/adminActions/userSkillActions";
 
 const DevelopersTable = () => {
   const dispatch = useDispatch();
 
-  const usersList = useSelector((state) => state.usersList);
-  const { loading, usersError, users } = usersList;
+  const allUserSkills = useSelector((state) => state.getAllUserSkills);
+  // const { loading, usersError, users } = usersList;
+  const { loading, error, users } = allUserSkills;
   const [userSearch, setUserSearch] = useState("");
   const [searchedUser, setSearchedUser] = useState("");
 
@@ -31,17 +33,20 @@ const DevelopersTable = () => {
     const searchQuery = e.target.value.toLowerCase();
     setUserSearch(searchQuery);
 
-    const foundUsers = usersList.users.filter((user) =>
+    console.log(users);
+
+    const foundUsers = allUserSkills.users.filter((user) =>
       user.name.toLowerCase().includes(searchQuery)
     );
+
     setSearchedUser(foundUsers);
   };
 
   const userTableData =
-    searchedUser.length > 0 ? searchedUser : usersList.users;
+    searchedUser.length > 0 ? searchedUser : allUserSkills.users;
 
   useEffect(() => {
-    dispatch(listUsers());
+    dispatch(getAllUserSkills());
   }, [dispatch]);
 
   return (
@@ -77,25 +82,24 @@ const DevelopersTable = () => {
           <Table>
             <thead className="text-primary">
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>LinkedIn</th>
-                <th>Profile Pic</th>
+                <th>Rank</th>
+                <th>Devloper</th>
+                <th>Score</th>
                 <th>Skill</th>
+                <th>Experience</th>
                 <th>Skill Level</th>
-                <th>Badge</th>
-                <th>Action</th>
+                <th>Badges</th>
               </tr>
             </thead>
             <tbody>
-              {userTableData.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.linkedin_url}</td>
-                  <td>{user.profile_pic_url}</td>
-                  <td>{user.years_of_experience}</td>
-                  <td>TBC</td>
+              {userTableData.map((entry) => (
+                <tr key={entry.user._id}>
+                  <td>1</td>
+                  <td>{entry.user.name}</td>
+                  <td>{entry.score}</td>
+                  <td>{entry.skill.skill_name}</td>
+                  <td>{entry.user.years_of_experience}</td>
+                  <td>{entry.skill_level}</td>
                   <td>TBC</td>
                   <td>
                     {/* <Row className="px-2"> */}

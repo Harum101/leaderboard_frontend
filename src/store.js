@@ -15,7 +15,10 @@ import {
   skillCreateReducer,
   skillUpdateReducer,
 } from "reducers/adminReducers/skillReducers";
-import { usersSkillsUpdateReducer } from "reducers/adminReducers/userSkillReducers";
+import {
+  usersSkillsUpdateReducer,
+  getAllUserSkillsReducer,
+} from "reducers/adminReducers/userSkillReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -26,6 +29,7 @@ const reducers = combineReducers({
   skillCreate: skillCreateReducer,
   skillUpdate: skillUpdateReducer,
   userSkillsUpdate: usersSkillsUpdateReducer,
+  getAllUserSkills: getAllUserSkillsReducer,
 });
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems")

@@ -7,7 +7,9 @@ import {
   USER_CREATE_REQUEST,
   USER_CREATE_SUCCESS,
   USER_CREATE_FAIL,
-  USER_CREATE_RESET,
+  ADD_BADGE_FAIL,
+  ADD_BADGE_SUCCESS,
+  ADD_BADGE_REQUEST,
 } from "constants/adminConstants";
 
 export const listUsers = () => async (dispatch) => {
@@ -69,6 +71,42 @@ export const createUser =
     } catch (error) {
       dispatch({
         type: USER_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const addBadge =
+  ({ userId: id, badgeId }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ADD_BADGE_REQUEST });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      await axios.post(
+        `/users/${id}/add-badge`,
+        {
+          badge: badgeId,
+        },
+        config
+      );
+
+      dispatch({
+        type: ADD_BADGE_SUCCESS,
+        payload: {
+          badge: badgeId,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_BADGE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
