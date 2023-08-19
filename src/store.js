@@ -15,6 +15,7 @@ import {
   skillCreateReducer,
   skillUpdateReducer,
 } from "reducers/adminReducers/skillReducers";
+import { usersSkillsUpdateReducer } from "reducers/adminReducers/userSkillReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   badgeCreate: badgeCreateReducer,
   skillCreate: skillCreateReducer,
   skillUpdate: skillUpdateReducer,
+  userSkillsUpdate: usersSkillsUpdateReducer,
 });
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems")

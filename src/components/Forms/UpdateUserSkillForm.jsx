@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Input, Row, Form } from "reactstrap";
 import { Divider } from "@mui/material";
 import { useParams } from "react-router-dom";
 
+import { updateUserSkill } from "actions/adminActions/userSkillActions";
+
 const UpdateUserSkillForm = () => {
+  const dispatch = useDispatch();
   // userId, skillId, skillLevel, nftLink, score
   const skillsList = useSelector((state) => state.skillsList);
   //COMPONENT LEVEL STATES
@@ -16,6 +19,15 @@ const UpdateUserSkillForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateUserSkill({
+        userId,
+        skillId,
+        skillLevel,
+        nftLink,
+        score,
+      })
+    );
     // console.log(userId, skillId, skillLevel, nftLink, score);
   };
 
@@ -52,9 +64,9 @@ const UpdateUserSkillForm = () => {
               <option value="" selected hidden>
                 Select Skill Level
               </option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Experienced">Experienced</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="experienced">Experienced</option>
             </Input>
           </Col>
         </Row>

@@ -4,7 +4,7 @@ import { USER_SKILL_UPDATE_SUCCESS } from "constants/adminConstants";
 import { USER_SKILL_UPDATE_REQUEST } from "constants/adminConstants";
 
 export const updateUserSkill =
-  ({ userId, skillId, skillLevel, avatarLink, score }) =>
+  ({ userId: id, skillId, skillLevel, nftLink, score }) =>
   async (dispatch) => {
     try {
       dispatch({ type: USER_SKILL_UPDATE_REQUEST });
@@ -14,12 +14,13 @@ export const updateUserSkill =
         },
       };
 
+      console.log(id, skillId, skillLevel, nftLink, score);
       await axios.post(
-        `/users/${userId}/update-skill`,
+        `/users/${id}/update-skills `,
         {
           skill: skillId,
           skill_level: skillLevel,
-          avatar_url: avatarLink,
+          avatar_url: nftLink,
           score,
         },
         config
@@ -30,7 +31,7 @@ export const updateUserSkill =
         payload: {
           skill: skillId,
           skill_level: skillLevel,
-          avatar_url: avatarLink,
+          avatar_url: nftLink,
           score,
         },
       });
