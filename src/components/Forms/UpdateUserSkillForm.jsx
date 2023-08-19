@@ -64,9 +64,9 @@ const UpdateUserSkillForm = () => {
               <option value="" selected hidden>
                 Select Skill Level
               </option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="experienced">Experienced</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Experienced">Experienced</option>
             </Input>
           </Col>
         </Row>

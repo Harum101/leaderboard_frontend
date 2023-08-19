@@ -98,9 +98,17 @@ const DevelopersTable = () => {
                   <td>{entry.user.name}</td>
                   <td>{entry.score}</td>
                   <td>{entry.skill.skill_name}</td>
-                  <td>{entry.user.years_of_experience}</td>
+                  <td>{entry.user.years_of_experience} Years</td>
                   <td>{entry.skill_level}</td>
-                  <td>TBC</td>
+                  <td>
+                    {entry.user.badge.map((bdg) => (
+                      <img
+                        src={`/images/${bdg.badge_image}`}
+                        style={{ width: "40px" }}
+                        alt={bdg.badge_image}
+                      />
+                    ))}
+                  </td>
                   <td>
                     {/* <Row className="px-2"> */}
                     {/* <div className="d-inline-flex"> */}
