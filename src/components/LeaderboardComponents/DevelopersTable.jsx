@@ -103,7 +103,7 @@ const DevelopersTable = () => {
                   <td>
                     {entry.user.badge.map((bdg) => (
                       <img
-                        src={`/images/${bdg.badge_image}`}
+                        src={`/images/badges/${bdg.badge_image}`}
                         style={{ width: "40px" }}
                         alt={bdg.badge_image}
                       />

@@ -33,30 +33,28 @@ export const listSkills = () => async (dispatch) => {
 };
 
 export const createSkill =
-  ({ skillName, skillImageLink }) =>
+  ({ skillName, skillImage }) =>
   async (dispatch) => {
     try {
       dispatch({ type: SKILL_CREATE_REQUEST });
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
+          "Content-Type": "multipart-formdata",
         },
       };
 
-      await axios.post(
-        "/skills/create",
-        {
-          skill_name: skillName,
-          skill_pic_url: skillImageLink,
-        },
-        config
-      );
+      const formdata = new FormData();
+      formdata.append("skill_name", skillName);
+      formdata.append("skill_image", skillImage);
+
+      await axios.post("/skills/create", formdata, config);
 
       dispatch({
         type: SKILL_CREATE_SUCCESS,
         payload: {
           skill_name: skillName,
-          skill_pic_url: skillImageLink,
+          skill_pic_url: skillImage,
         },
       });
     } catch (error) {
@@ -69,4 +67,3 @@ export const createSkill =
       });
     }
   };
-

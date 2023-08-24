@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// reactstrap components
+// Reactstrap Components
 import {
   Card,
   CardHeader,
@@ -16,6 +16,7 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
+
 // Icons
 import { Delete, Search, Update, Edit } from "@mui/icons-material";
 import { CircularProgress, IconButton, TextField } from "@mui/material";
@@ -108,7 +109,7 @@ const Dashboard = () => {
               <CardHeader>
                 <Row>
                   <Col md="4">
-                    <CardTitle tag="h4">Users Table</CardTitle>
+                    <CardTitle tag="h4">Users</CardTitle>
                   </Col>
                   <Col md="4"></Col>
                   <Col md="4" className="d-flex justify-content-end">
@@ -185,7 +186,7 @@ const Dashboard = () => {
               <CardHeader>
                 <Row>
                   <Col md="5">
-                    <CardTitle tag="h4">Skills Table</CardTitle>
+                    <CardTitle tag="h4">Skills</CardTitle>
                   </Col>
                   <Col md="7" className="d-flex justify-content-end">
                     <InputGroup>
@@ -220,7 +221,14 @@ const Dashboard = () => {
                       {skillTableData.map((skill) => (
                         <tr key={skill._id}>
                           <td>{skill.skill_name}</td>
-                          <td>{skill.skill_pic_url}</td>
+                          <td>
+                            <img
+                              src={`/images/skills/${skill.skill_image}`}
+                              alt={skill.skill_name}
+                              style={{ width: "50px" }}
+                              rounded
+                            />
+                          </td>
                           <td>
                             <Row className="px-2">
                               <Button className=" m-1" color="danger">
@@ -244,7 +252,7 @@ const Dashboard = () => {
               <CardHeader>
                 <Row>
                   <Col md="5">
-                    <CardTitle tag="h4">Badges Table</CardTitle>
+                    <CardTitle tag="h4">Badges</CardTitle>
                   </Col>
                   <Col md="7" className="d-flex justify-content-end">
                     <InputGroup>
@@ -281,7 +289,7 @@ const Dashboard = () => {
                           <td>{badge.badge_name}</td>
                           <td>
                             <img
-                              src={`/images/${badge.badge_image}`}
+                              src={`/images/badges/${badge.badge_image}`}
                               alt={badge.badge_name}
                               style={{ width: "50px" }}
                               rounded

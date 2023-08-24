@@ -41,7 +41,7 @@ const BadgeForm = () => {
     if (badge) {
       dispatch({ type: BADGE_CREATE_RESET });
       setBadgeName("");
-      setBadgeImage("");
+      setBadgeImageLocal(false);
     }
   };
 
@@ -89,7 +89,6 @@ const BadgeForm = () => {
                       setBadgeImage(e.target.files[0]);
                       convertToBase64(e);
                     }}
-                    // (e) => setBadgeImage(e.target.value)
                     className="border p-1 rounded"
                   />
                 </FormGroup>

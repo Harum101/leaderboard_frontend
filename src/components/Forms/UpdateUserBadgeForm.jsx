@@ -1,5 +1,6 @@
-import { Divider } from "@mui/material";
+import { Alert, Divider } from "@mui/material";
 import { addBadge } from "actions/adminActions/userActions";
+import { ADD_BADGE_RESET } from "constants/adminConstants";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -8,8 +9,16 @@ import { Button, Col, Row, Form, ButtonGroup } from "reactstrap";
 const UpdateUserBadgeForm = () => {
   const dispatch = useDispatch();
   const badgesList = useSelector((state) => state.badgesList);
+  const badgeAdd = useSelector((state) => state.badgeAdd);
+  const { badgeSuccess, badgeError } = badgeAdd;
+
   const [badgeImage, setBadgeImage] = useState("");
   const { id: userId } = useParams();
+
+  const alertHandler = () => {
+    dispatch({ type: ADD_BADGE_RESET });
+    setBadgeImage("");
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -21,6 +30,16 @@ const UpdateUserBadgeForm = () => {
   };
   return (
     <div>
+      {badgeSuccess && (
+        <Alert onClose={alertHandler} severity="success" className="my-2">
+          Badge Added Successfully!
+        </Alert>
+      )}
+      {badgeError && (
+        <Alert onClose={() => {}} severity="danger" className="my-2">
+          Error: {badgeError}
+        </Alert>
+      )}
       <h5 className="d-flex justify-content-center">Update Badges</h5>
       <Divider />
       <Form onSubmit={submitHandler}>
@@ -44,7 +63,7 @@ const UpdateUserBadgeForm = () => {
                     onClick={() => setBadgeImage(badge.badge_image)}
                   >
                     <img
-                      src={`/images/${badge.badge_image}`}
+                      src={`/images/badges/${badge.badge_image}`}
                       alt={badge.badge_name}
                       style={{ width: "50px" }}
                     />
@@ -56,7 +75,7 @@ const UpdateUserBadgeForm = () => {
           <Col md={4}>
             {badgeImage && (
               <img
-                src={`/images/${badgeImage}`}
+                src={`/images/badges/${badgeImage}`}
                 style={{
                   width: "250px",
                   backgroundColor: "#007bff",
@@ -71,16 +90,6 @@ const UpdateUserBadgeForm = () => {
             )}
           </Col>
         </Row>
-        {/* <Row>
-          <Col md="6">
-            <label>Badge Name: </label>
-            <Input type="select">
-              {badgesList.badges.map((badge) => (
-                <option key={badge._id}>{badge.badge_name}</option>
-              ))}
-            </Input>
-          </Col>
-        </Row> */}
         <Row className="mt-3">
           <div className="update ml-auto mr-auto">
             <Button className="btn-round" color="primary" type="submit">

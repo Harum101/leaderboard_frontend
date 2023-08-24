@@ -19,6 +19,7 @@ import {
   usersSkillsUpdateReducer,
   getAllUserSkillsReducer,
 } from "reducers/adminReducers/userSkillReducers";
+import { badgeAddReducer } from "reducers/adminReducers/userReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   skillsList: skillsListReducer,
   userCreate: userCreateReducer,
   badgeCreate: badgeCreateReducer,
+  badgeAdd: badgeAddReducer,
   skillCreate: skillCreateReducer,
   skillUpdate: skillUpdateReducer,
   userSkillsUpdate: usersSkillsUpdateReducer,
@@ -54,6 +56,11 @@ const reducers = combineReducers({
 
 const store = configureStore({
   reducer: reducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }),
   //   preloadedState: initialState,
 });
 

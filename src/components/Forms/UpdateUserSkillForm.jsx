@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Input, Row, Form } from "reactstrap";
-import { Divider } from "@mui/material";
+import { Alert, Divider } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { updateUserSkill } from "actions/adminActions/userSkillActions";
+import { USER_SKILL_UPDATE_RESET } from "constants/adminConstants";
 
 const UpdateUserSkillForm = () => {
   const dispatch = useDispatch();
   // userId, skillId, skillLevel, nftLink, score
   const skillsList = useSelector((state) => state.skillsList);
+  const userSkillsUpdate = useSelector((state) => state.userSkillsUpdate);
+  const { userSkills, success, error } = userSkillsUpdate;
+
   //COMPONENT LEVEL STATES
   const { id: userId } = useParams();
   const [skillId, setSkillId] = useState("");
   const [skillLevel, setSkillLevel] = useState("beginner");
   const [nftLink, setNFTLink] = useState("");
   const [score, setScore] = useState("");
+
+  const alertHandler = () => {
+    if (userSkills) {
+      dispatch({ type: USER_SKILL_UPDATE_RESET });
+      setSkillId("");
+      setSkillLevel("");
+      setNFTLink("");
+      setScore("");
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -33,6 +47,16 @@ const UpdateUserSkillForm = () => {
 
   return (
     <div>
+      {success && (
+        <Alert onClose={alertHandler} severity="success" className="my-2">
+          Skills Updated Successfully!
+        </Alert>
+      )}
+      {error && (
+        <Alert onClose={()=>{}} severity="danger" className="my-2">
+          Error: {error}
+        </Alert>
+      )}
       <h5 className="d-flex justify-content-center">Update Skills</h5>
       <Divider />
       <Form onSubmit={submitHandler}>

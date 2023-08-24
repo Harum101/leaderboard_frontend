@@ -19,24 +19,37 @@ import {
 
 const SkillForm = () => {
   const [skillName, setSkillName] = useState();
-  const [skillImageLink, setSkillImageLink] = useState();
+  const [skillImage, setSkillImage] = useState();
+  const [skillImageLocal, setSkillImageLocal] = useState();
   // FUNCTIONALITIES
   const dispatch = useDispatch();
   const skillCreate = useSelector((state) => state.skillCreate);
   const { skill, skillSuccess, skillError } = skillCreate;
 
+  const convertToBase64 = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setSkillImageLocal(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+  };
+
   const alertHandler = () => {
     if (skill) {
       dispatch({ type: SKILL_CREATE_RESET });
       setSkillName("");
-      setSkillImageLink("");
+      setSkillImageLocal(false);
     }
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createSkill({ skillName, skillImageLink }));
+    dispatch(createSkill({ skillName, skillImage }));
   };
+
   return (
     <div>
       {skillSuccess && (
@@ -54,7 +67,7 @@ const SkillForm = () => {
           <CardTitle tag="h5">Skills Form</CardTitle>
         </CardHeader>
         <CardBody>
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={submitHandler} encType="multipart/form-data">
             <Row>
               <Col className="pr-1" md="5">
                 <FormGroup>
@@ -69,16 +82,29 @@ const SkillForm = () => {
               </Col>
               <Col className="pl-1" md="7">
                 <FormGroup>
-                  <label>Skill Image Link</label>
+                  <label>Skill Image</label>
                   <Input
-                    placeholder="Image URL"
-                    value={skillImageLink}
-                    type="text"
-                    onChange={(e) => setSkillImageLink(e.target.value)}
+                    type="file"
+                    onChange={(e) => {
+                      setSkillImage(e.target.files[0]);
+                      convertToBase64(e);
+                    }}
+                    className="border p-1 rounded"
                   />
                 </FormGroup>
               </Col>
             </Row>
+            {skillImageLocal && (
+              <Row>
+                <div className="d-flex justify-content-center mx-3">
+                  <img
+                    src={skillImageLocal}
+                    alt="badge"
+                    style={{ width: "100px" }}
+                  />
+                </div>
+              </Row>
+            )}
             <Row>
               <div className="update ml-auto mr-auto">
                 <Button className="btn-round" color="primary" type="submit">

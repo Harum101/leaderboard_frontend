@@ -6,7 +6,6 @@ import {
   BADGE_LIST_SUCCESS,
   BADGE_CREATE_FAIL,
   BADGE_CREATE_REQUEST,
-  BADGE_CREATE_RESET,
   BADGE_CREATE_SUCCESS,
 } from "constants/adminConstants";
 
@@ -53,7 +52,7 @@ export const createBadge =
         type: BADGE_CREATE_SUCCESS,
         payload: {
           badge_name: badgeName,
-          badge_pic_url: badgeImage,
+          badge_image: badgeImage,
         },
       });
     } catch (error) {

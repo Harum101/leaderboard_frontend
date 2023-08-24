@@ -21,16 +21,36 @@ export const badgesListReducer = (state = { badges: [] }, action) => {
   }
 };
 
-export const badgeCreateReducer = (state = {}, action) => {
+const initialState = {
+  loading: false,
+  badgeSuccess: false,
+  badgeError: null,
+  badge: {
+    badge_name: "",
+    badge_image: {},
+  },
+};
+
+export const badgeCreateReducer = (state = initialState, action) => {
   switch (action.type) {
     case BADGE_CREATE_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case BADGE_CREATE_SUCCESS:
-      return { loading: false, badgeSuccess: true, badge: action.payload };
+      return {
+        ...state,
+        loading: false,
+        badgeSuccess: true,
+        badge: action.payload,
+      };
     case BADGE_CREATE_FAIL:
-      return { loading: false, badgeError: action.payload };
+      return {
+        ...state,
+        loading: false,
+        badgeSuccess: false,
+        badgeError: action.payload,
+      };
     case BADGE_CREATE_RESET:
-      return {};
+      return initialState;
     default:
       return state;
   }
