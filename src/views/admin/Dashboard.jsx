@@ -14,12 +14,11 @@ import {
   InputGroup,
   Input,
   InputGroupAddon,
-  InputGroupText,
 } from "reactstrap";
 
 // Icons
-import { Delete, Search, Update, Edit } from "@mui/icons-material";
-import { CircularProgress, IconButton, TextField } from "@mui/material";
+import { Delete, Search, Edit } from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
 
 // Actions
 import { listUsers } from "actions/adminActions/userActions";
@@ -153,7 +152,12 @@ const Dashboard = () => {
                           <td>{user.name}</td>
                           <td>{user.email}</td>
                           <td>{user.linkedin_url}</td>
-                          <td>{user.profile_pic_url}</td>
+                          <td><img
+                              src={`/images/profilePictures/${user.profile_image}`}
+                              alt={user.name}
+                              style={{ width: "50px" }}
+                              rounded
+                            /></td>
                           <td>{user.years_of_experience}</td>
                           <td>TBC</td>
                           <td>TBC</td>

@@ -34,28 +34,26 @@ export const listUsers = () => async (dispatch) => {
 };
 
 export const createUser =
-  ({ name, email, linkedin, profilePic, yearsOfExp, availability }) =>
+  ({ name, email, linkedin, profileImage, yearsOfExp, availability }) =>
   async (dispatch) => {
     try {
       dispatch({ type: USER_CREATE_REQUEST });
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
+          "Content-Type": "multipart-formdata",
         },
       };
 
-      await axios.post(
-        "/users/create",
-        {
-          name,
-          email,
-          linkedin_url: linkedin,
-          profile_pic_url: profilePic,
-          years_of_experience: yearsOfExp,
-          availability,
-        },
-        config
-      );
+      const formdata = new FormData();
+      formdata.append("name", name);
+      formdata.append("email", email);
+      formdata.append("linkedin_url", linkedin);
+      formdata.append("profile_image", profileImage);
+      formdata.append("years_of_experience", yearsOfExp);
+      formdata.append("availability", availability);
+
+      await axios.post("/users/create", formdata, config);
 
       dispatch({
         type: USER_CREATE_SUCCESS,
@@ -63,7 +61,7 @@ export const createUser =
           name,
           email,
           linkedin_url: linkedin,
-          profile_pic_url: profilePic,
+          profile_image: profileImage,
           years_of_experience: yearsOfExp,
           availability,
         },

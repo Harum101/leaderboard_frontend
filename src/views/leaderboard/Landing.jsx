@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,9 +8,6 @@ import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import xforce from "assets/img/xforce.png";
-import jason from "assets/img/faces/jason.jpg";
-import joe from "assets/img/faces/joe.jpg";
-import erik from "assets/img/faces/erik.jpg";
 
 // Components
 import Appbar from "components/LeaderboardComponents/AppBar";
@@ -18,7 +15,8 @@ import { CardMedia, Chip } from "@mui/material";
 import { Col, Row } from "reactstrap";
 import { AutoGraph, Psychology, Stars } from "@mui/icons-material";
 import DevelopersTable from "components/LeaderboardComponents/DevelopersTable";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUserSkills } from "actions/adminActions/userSkillActions";
 
 //ACTIONS IMPORTS
 
@@ -70,9 +68,17 @@ const footers = [
     description: ["Privacy policy", "Terms of use"],
   },
 ];
-
+ 
 const Landing = () => {
   const dispatch = useDispatch();
+  const allUserSkills = useSelector((state) => state.getAllUserSkills);
+  const users = allUserSkills.users.sort((a, b) => b.score - a.score);
+
+  console.log(users[1]?.user?.name);
+
+  useEffect(() => {
+    dispatch(getAllUserSkills());
+  }, [dispatch]);
   return (
     // <ThemeProvider theme={defaultTheme}>
     <div
@@ -119,7 +125,7 @@ const Landing = () => {
                 },
               }}
             >
-              <CardMedia sx={{ height: 180 }} image={joe} />
+              <CardMedia sx={{ height: 180 }} image={`/images/profilePictures/${users[1]?.user?.profile_image}`} />
               <CardContent>
                 <Typography
                   gutterBottom
@@ -127,21 +133,21 @@ const Landing = () => {
                   component="div"
                   className="d-flex justify-content-center"
                 >
-                  Joe Gardener
+                  {users[1]?.user?.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   className="d-flex justify-content-center"
                 >
-                  Level: Intermediate
+                  Level: {users[1]?.skill_level}
                 </Typography>
                 <div className="py-2">
                   <Row className="mt-2">
                     <Col className="d-flex justify-content-center pr-1">
                       <Chip
                         icon={<Psychology />}
-                        label="REACT"
+                        label={users[1]?.skill?.skill_name}
                         color="primary"
                         sx={{ width: "103px" }}
                       />
@@ -149,7 +155,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pl-1">
                       <Chip
                         icon={<AutoGraph />}
-                        label="2 YEARS"
+                        label={`${users[1]?.user?.years_of_experience} Years`}
                         color="success"
                         sx={{ width: "103px" }}
                       />
@@ -159,7 +165,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pr-1">
                       <Chip
                         icon={<Stars />}
-                        label="120"
+                        label={users[1]?.score}
                         color="warning"
                         sx={{ width: "103px" }}
                       />
@@ -193,7 +199,7 @@ const Landing = () => {
             >
               <CardMedia
                 sx={{ height: 180 }}
-                image={jason}
+                image={`/images/profilePictures/${users[0]?.user?.profile_image}`}
                 title="green iguana"
               />
               <CardContent>
@@ -203,21 +209,21 @@ const Landing = () => {
                   component="div"
                   className="d-flex justify-content-center"
                 >
-                  Jason Derulo
+                  {users[0]?.user?.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   className="d-flex justify-content-center"
                 >
-                  Level: Expert
+                  Level: {users[0]?.skill_level}
                 </Typography>
                 <div className="py-2">
                   <Row className="mt-2">
                     <Col className="d-flex justify-content-center pr-1">
                       <Chip
                         icon={<Psychology />}
-                        label="MERN"
+                        label={users[0]?.skill?.skill_name}
                         color="primary"
                         sx={{ width: "103px" }}
                       />
@@ -225,7 +231,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pl-1">
                       <Chip
                         icon={<AutoGraph />}
-                        label="2 YEARS"
+                        label={`${users[0]?.user?.years_of_experience} Years`}
                         color="success"
                         sx={{ width: "103px" }}
                       />
@@ -235,7 +241,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pr-1">
                       <Chip
                         icon={<Stars />}
-                        label="120"
+                        label={users[0]?.score}
                         color="warning"
                         sx={{ width: "103px" }}
                       />
@@ -268,7 +274,7 @@ const Landing = () => {
             >
               <CardMedia
                 sx={{ height: 180 }}
-                image={erik}
+                image={`/images/profilePictures/${users[2]?.user?.profile_image}`}
                 title="green iguana"
               />
               <CardContent>
@@ -278,21 +284,21 @@ const Landing = () => {
                   component="div"
                   className="d-flex justify-content-center"
                 >
-                  Erik Estrada
+                  {users[2]?.user?.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   className="d-flex justify-content-center"
                 >
-                  Level: Beginner
+                  Level: {users[2]?.skill_level}
                 </Typography>
                 <div className="py-2">
                   <Row className="mt-2">
                     <Col className="d-flex justify-content-center pr-1">
                       <Chip
                         icon={<Psychology />}
-                        label="NodeJs"
+                        label={users[2]?.skill?.skill_name}
                         color="primary"
                         sx={{ width: "103px" }}
                       />
@@ -300,7 +306,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pl-1">
                       <Chip
                         icon={<AutoGraph />}
-                        label="2 YEARS"
+                        label={`${users[2]?.user?.years_of_experience} Years`}
                         color="success"
                         sx={{ width: "103px" }}
                       />
@@ -310,7 +316,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pr-1">
                       <Chip
                         icon={<Stars />}
-                        label="120"
+                        label={users[2]?.score}
                         color="warning"
                         sx={{ width: "103px" }}
                       />

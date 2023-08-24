@@ -23,7 +23,8 @@ const UserForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [linkedin, setLinkedin] = useState("");
-  const [profilePic, setProfilePic] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [profileImageLocal, setProfileImageLocal] = useState("");
   const [yearsOfExp, setYearsOfExp] = useState("");
   const [availability, setAvailability] = useState("");
   // FUNCTIONALITIES
@@ -32,15 +33,27 @@ const UserForm = () => {
 
   const { user, userSuccess, userError } = userCreate;
 
+  const convertToBase64 = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setProfileImageLocal(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+  };
+
   const alertHandler = () => {
     if (user) {
       dispatch({ type: USER_CREATE_RESET });
       setName("");
       setEmail("");
       setLinkedin("");
-      setProfilePic("");
+      setProfileImage("");
       setYearsOfExp("");
       setAvailability("");
+      setProfileImageLocal(false);
     }
   };
 
@@ -51,7 +64,7 @@ const UserForm = () => {
         name,
         email,
         linkedin,
-        profilePic,
+        profileImage,
         yearsOfExp,
         availability,
       })
@@ -72,10 +85,25 @@ const UserForm = () => {
       )}
       <Card className="card-user">
         <CardHeader>
-          <CardTitle tag="h5">User Form</CardTitle>
+          <Row>
+            <Col md={6}>
+              <CardTitle tag="h5">User Form</CardTitle>
+            </Col>
+            <Col md={6} className="d-flex flex-row-reverse">
+              {profileImageLocal && (
+                <div className="mx-4">
+                  <img
+                    src={profileImageLocal}
+                    alt="developer"
+                    style={{ width: "150px" }}
+                  />
+                </div>
+              )}
+            </Col>
+          </Row>
         </CardHeader>
         <CardBody>
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={submitHandler} encType="multipart/form-data">
             <Row>
               <Col md="6">
                 <FormGroup>
@@ -116,13 +144,24 @@ const UserForm = () => {
                 </FormGroup>
               </Col>
               <Col md="6">
-                <FormGroup>
+                {/* <FormGroup>
                   <label>Profile Picture URL</label>
                   <Input
                     placeholder="Profile Picture URL"
                     type="text"
-                    value={profilePic}
-                    onChange={(e) => setProfilePic(e.target.value)}
+                    value={profileImage}
+                    onChange={(e) => setProfileImage(e.target.value)}
+                  />
+                </FormGroup> */}
+                <FormGroup>
+                  <label>Profile Picture</label>
+                  <Input
+                    type="file"
+                    onChange={(e) => {
+                      setProfileImage(e.target.files[0]);
+                      convertToBase64(e);
+                    }}
+                    className="border p-1 rounded"
                   />
                 </FormGroup>
               </Col>

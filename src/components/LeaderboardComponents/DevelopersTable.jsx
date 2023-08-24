@@ -33,8 +33,6 @@ const DevelopersTable = () => {
     const searchQuery = e.target.value.toLowerCase();
     setUserSearch(searchQuery);
 
-    console.log(users);
-
     const foundUsers = allUserSkills.users.filter((entry) =>
       entry.user.name.toLowerCase().includes(searchQuery)
     );
@@ -43,11 +41,10 @@ const DevelopersTable = () => {
   };
 
   const userTableData =
-    searchedUser.length > 0 ? searchedUser : allUserSkills.users;
+    searchedUser.length > 0 ? searchedUser : allUserSkills.users.sort((a, b) => b.score - a.score);
 
-  useEffect(() => {
-    dispatch(getAllUserSkills());
-  }, [dispatch]);
+  // console.log(userTableData)
+
 
   return (
     <Card>
