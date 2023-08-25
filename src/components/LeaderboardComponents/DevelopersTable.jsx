@@ -43,7 +43,6 @@ const DevelopersTable = () => {
   const userTableData =
     searchedUser.length > 0 ? searchedUser : allUserSkills.users.sort((a, b) => b.score - a.score);
 
-  // console.log(userTableData)
 
 
   return (
@@ -89,9 +88,9 @@ const DevelopersTable = () => {
               </tr>
             </thead>
             <tbody>
-              {userTableData.map((entry) => (
+              {userTableData.map((entry, index) => (
                 <tr key={entry.user._id}>
-                  <td>1</td>
+                  <td>{index+1}</td>
                   <td>{entry.user.name}</td>
                   <td>{entry.score}</td>
                   <td>{entry.skill.skill_name}</td>
