@@ -5,6 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
   usersListReducer,
   userCreateReducer,
+  badgeAddReducer,
 } from "reducers/adminReducers/userReducers";
 import {
   badgesListReducer,
@@ -19,7 +20,7 @@ import {
   usersSkillsUpdateReducer,
   getAllUserSkillsReducer,
 } from "reducers/adminReducers/userSkillReducers";
-import { badgeAddReducer } from "reducers/adminReducers/userReducers";
+import { companyRegisterReducer } from "reducers/leaderboardReducers/authReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   skillUpdate: skillUpdateReducer,
   userSkillsUpdate: usersSkillsUpdateReducer,
   getAllUserSkills: getAllUserSkillsReducer,
+  companyRegister: companyRegisterReducer,
 });
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems")

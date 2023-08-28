@@ -1,9 +1,7 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-// import Link from "@mui/material/Link";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Nav } from "reactstrap";
 // import Button from "@mui/material/Button";
 import { Button } from "reactstrap";
@@ -18,7 +16,7 @@ const Appbar = () => {
       //   sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
     >
       <Toolbar sx={{ flexWrap: "wrap" }}>
-        <img src={logixos} style={{ width: "180px" }}></img>
+        <img src={logixos} style={{ width: "180px" }} alt="logixos"></img>
         <Nav className="d-flex ml-auto">
           <NavLink to="#" className="nav-NavLink text-secondary px-2 mx-1">
             Features
@@ -30,9 +28,11 @@ const Appbar = () => {
             Support
           </NavLink>
         </Nav>
-        <Button color="dark" className="px-3 mx-2" outline>
-          Log In
-        </Button>
+        <Link to="login">
+          <Button color="dark" className="px-3 mx-2" outline>
+            Log In
+          </Button>
+        </Link>
       </Toolbar>
     </AppBar>
   );

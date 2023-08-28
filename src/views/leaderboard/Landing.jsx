@@ -68,7 +68,7 @@ const footers = [
     description: ["Privacy policy", "Terms of use"],
   },
 ];
- 
+
 const Landing = () => {
   const dispatch = useDispatch();
   const allUserSkills = useSelector((state) => state.getAllUserSkills);
@@ -97,19 +97,22 @@ const Landing = () => {
       <CssBaseline />
       <Appbar />
       {/* Hero unit */}
-      <Container
-        disableGutters
-        maxWidth="sm"
-        component="main"
-        sx={{ pt: 8, pb: 6 }}
-      >
-        <div className="d-flex justify-content-center mb-">
-          <img src={xforce} style={{ width: "250px" }} alt="xforce" />
-        </div>
-        {/*   */}
-      </Container>
+      
+        <Container
+          disableGutters
+          maxWidth="sm"
+          component="main"
+          sx={{ pt: 8, pb: 6 }}
+        >
+          <div className="d-flex justify-content-center mb-">
+            <img src={xforce} style={{ width: "250px" }} alt="xforce" />
+          </div>
+          {/*   */}
+        </Container>
+
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
+      <Card></Card>
         <Row>
           {/* 2nd Rank */}
           <Col>
@@ -125,7 +128,10 @@ const Landing = () => {
                 },
               }}
             >
-              <CardMedia sx={{ height: 180 }} image={`/images/profilePictures/${users[1]?.user?.profile_image}`} />
+              <CardMedia
+                sx={{ height: 180 }}
+                image={`/images/profilePictures/${users[1]?.user?.profile_image}`}
+              />
               <CardContent>
                 <Typography
                   gutterBottom
@@ -171,12 +177,13 @@ const Landing = () => {
                       />
                     </Col>
                     <Col className="d-flex justify-content-center pl-1">
-                      <Chip
-                        icon={<AutoGraph />}
-                        label="2"
-                        color="success"
-                        sx={{ width: "103px" }}
-                      />
+                      {users[1]?.user?.badge.map((bdg) => (
+                        <img
+                          src={`/images/badges/${bdg.badge_image}`}
+                          style={{ width: "35px" }}
+                          alt={bdg.badge_image}
+                        />
+                      ))}
                     </Col>
                   </Row>
                 </div>
@@ -247,12 +254,13 @@ const Landing = () => {
                       />
                     </Col>
                     <Col className="d-flex justify-content-center pl-1">
-                      <Chip
-                        icon={<AutoGraph />}
-                        label="2"
-                        color="success"
-                        sx={{ width: "103px" }}
-                      />
+                      {users[0]?.user?.badge.map((bdg) => (
+                        <img
+                          src={`/images/badges/${bdg.badge_image}`}
+                          style={{ width: "35px" }}
+                          alt={bdg.badge_image}
+                        />
+                      ))}
                     </Col>
                   </Row>
                 </div>
@@ -322,12 +330,13 @@ const Landing = () => {
                       />
                     </Col>
                     <Col className="d-flex justify-content-center pl-1">
-                      <Chip
-                        icon={<AutoGraph />}
-                        label="2"
-                        color="success"
-                        sx={{ width: "103px" }}
-                      />
+                      {users[2]?.user?.badge.map((bdg) => (
+                        <img
+                          src={`/images/badges/${bdg.badge_image}`}
+                          style={{ width: "35px" }}
+                          alt={bdg.badge_image}
+                        />
+                      ))}
                     </Col>
                   </Row>
                 </div>
