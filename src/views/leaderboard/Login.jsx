@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -12,9 +12,30 @@ import {
   Row,
 } from "reactstrap";
 import logixos_logo_white from "assets/img/logixos_logo_white.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginCompany } from "actions/leaderboardActions/authActions";
+import { Alert } from "@mui/material";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { success, error, companyInfo } = useSelector(
+    (state) => state.companyLogin
+  );
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(loginCompany({ email, password }));
+  };
+  useEffect(() => {
+    if (companyInfo) {
+      companyInfo.isAdmin ? navigate("/admin/dashboard") : navigate("/");
+    }
+  }, [companyInfo, navigate]);
+
   return (
     <Row>
       <Col
@@ -41,14 +62,24 @@ const Login = () => {
             <CardTitle tag="h3">LOG IN</CardTitle>
           </CardHeader>
           <CardBody className="d-flex justify-content-center">
-            <Form className="w-50">
+            <Form className="w-50" onSubmit={submitHandler}>
               <FormGroup>
                 <label>Email</label>
-                <Input placeholder="Email" type="text" />
+                <Input
+                  placeholder="Email"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </FormGroup>
               <FormGroup>
                 <label>Password</label>
-                <Input placeholder="Password" type="password" />
+                <Input
+                  placeholder="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </FormGroup>
               <p>
                 Not Registered?{" "}
@@ -56,7 +87,11 @@ const Login = () => {
                   Register Here
                 </Link>
               </p>
-
+              {error && (
+                <Alert severity="error" className="my-2">
+                  {error}
+                </Alert>
+              )}
               <Row className="mt-4">
                 <div className="update ml-auto mr-auto">
                   <Button className="btn-round" color="secondary" type="submit">

@@ -31,6 +31,7 @@ const Dashboard = () => {
   const usersList = useSelector((state) => state.usersList);
   const badgesList = useSelector((state) => state.badgesList);
   const skillsList = useSelector((state) => state.skillsList);
+  const { companyInfo } = useSelector((state) => state.companyLogin);
   const { loadingUsers, usersError, users } = usersList;
   const { loadingBadges, badgesError, badges } = badgesList;
   const { loadingSkills, skillsError, skills } = skillsList;
@@ -93,10 +94,14 @@ const Dashboard = () => {
 
   /*----------USE EFFECT-----------*/
   useEffect(() => {
-    dispatch(listUsers());
-    dispatch(listBadges());
-    dispatch(listSkills());
-  }, [dispatch]);
+    if (companyInfo && companyInfo.isAdmin) {
+      dispatch(listUsers());
+      dispatch(listBadges());
+      dispatch(listSkills());
+    } else {
+      navigate("/login");
+    }
+  }, [companyInfo, dispatch, navigate]);
 
   /*----------DASHBOARD RENDER-----------*/
   return (
@@ -152,12 +157,14 @@ const Dashboard = () => {
                           <td>{user.name}</td>
                           <td>{user.email}</td>
                           <td>{user.linkedin_url}</td>
-                          <td><img
+                          <td>
+                            <img
                               src={`/images/profilePictures/${user.profile_image}`}
                               alt={user.name}
                               style={{ width: "50px" }}
                               rounded
-                            /></td>
+                            />
+                          </td>
                           <td>{user.years_of_experience}</td>
                           <td>TBC</td>
                           <td>TBC</td>

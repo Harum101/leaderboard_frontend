@@ -85,7 +85,7 @@ const Landing = () => {
       style={{
         backgroundImage: `url("https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2655.jpg?w=740&t=st=1692168929~exp=1692169529~hmac=d522bc7d3f93579f87d44a5a46c06cecdd0a67c3b73cace4cf7fcc396cd4cc4a")`,
         maxWidth: "100%",
-        height: "100%", // Set height to cover the browser screen
+        height: "100%",
         // maxHeight: "100vh",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -97,22 +97,22 @@ const Landing = () => {
       <CssBaseline />
       <Appbar />
       {/* Hero unit */}
-      
-        <Container
-          disableGutters
-          maxWidth="sm"
-          component="main"
-          sx={{ pt: 8, pb: 6 }}
-        >
-          <div className="d-flex justify-content-center mb-">
-            <img src={xforce} style={{ width: "250px" }} alt="xforce" />
-          </div>
-          {/*   */}
-        </Container>
+
+      <Container
+        disableGutters
+        maxWidth="sm"
+        component="main"
+        sx={{ pt: 8, pb: 6 }}
+      >
+        <div className="d-flex justify-content-center mb-">
+          <img src={xforce} style={{ width: "250px" }} alt="xforce" />
+        </div>
+        {/*   */}
+      </Container>
 
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
-      <Card></Card>
+        <Card></Card>
         <Row>
           {/* 2nd Rank */}
           <Col>
@@ -179,6 +179,7 @@ const Landing = () => {
                     <Col className="d-flex justify-content-center pl-1">
                       {users[1]?.user?.badge.map((bdg) => (
                         <img
+                          key={bdg._id}
                           src={`/images/badges/${bdg.badge_image}`}
                           style={{ width: "35px" }}
                           alt={bdg.badge_image}

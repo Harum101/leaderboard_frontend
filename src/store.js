@@ -20,7 +20,11 @@ import {
   usersSkillsUpdateReducer,
   getAllUserSkillsReducer,
 } from "reducers/adminReducers/userSkillReducers";
-import { companyRegisterReducer } from "reducers/leaderboardReducers/authReducers";
+import {
+  companyRegisterReducer,
+  verificationReducer,
+  companyLoginReducer,
+} from "reducers/leaderboardReducers/authReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -34,27 +38,17 @@ const reducers = combineReducers({
   userSkillsUpdate: usersSkillsUpdateReducer,
   getAllUserSkills: getAllUserSkillsReducer,
   companyRegister: companyRegisterReducer,
+  verification: verificationReducer,
+  companyLogin: companyLoginReducer,
 });
 
-// const cartItemsFromStorage = localStorage.getItem("cartItems")
-//   ? JSON.parse(localStorage.getItem("cartItems"))
-//   : [];
+const companyInfoFromStorage = localStorage.getItem("companyInfo")
+  ? JSON.parse(localStorage.getItem("companyInfo"))
+  : null;
 
-// const userInfoFromStorage = localStorage.getItem("userInfo")
-//   ? JSON.parse(localStorage.getItem("userInfo"))
-//   : null;
-
-// const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
-//   ? JSON.parse(localStorage.getItem("shippingAddress"))
-//   : {};
-
-// const initialState = {
-//   cart: {
-//     cartItems: cartItemsFromStorage,
-//     shippingAddress: shippingAddressFromStorage,
-//   },
-//   userLogin: { userInfo: userInfoFromStorage },
-// };
+const initialState = {
+  companyLogin: { companyInfo: companyInfoFromStorage },
+};
 
 const store = configureStore({
   reducer: reducers,
@@ -63,7 +57,7 @@ const store = configureStore({
       immutableCheck: false,
       serializableCheck: false,
     }),
-  //   preloadedState: initialState,
+  preloadedState: initialState,
 });
 
 export default store;

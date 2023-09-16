@@ -19,10 +19,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Register = () => {
   const dispatch = useDispatch("");
-  const { success, error } = useSelector((state) => state.companyRegister);
+  const { success, error, message } = useSelector(
+    (state) => state.companyRegister
+  );
   if (error) {
     console.log(error);
   }
+  const [openHandler, setOpenHandler] = useState(false);
   //Company Data
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -41,11 +44,12 @@ const Register = () => {
     setContact("");
     setEmail("");
     setCompanyName("");
-    setCompanyWebsite(""); 
-    setNoOfEmployees(null);
+    setCompanyWebsite("");
+    setNoOfEmployees("");
     setIndustry("");
     setPassword("");
     setConfirmPassword("");
+    setOpenHandler(false);
   };
   //SUBMIT HANDLER
   const submitHandler = (e) => {
@@ -53,6 +57,7 @@ const Register = () => {
     if (password !== confirmPassword) {
       setAlert("The passwords you entered do not match.");
     } else {
+      setOpenHandler(true);
       dispatch(
         registerCompany({
           name,
@@ -93,7 +98,11 @@ const Register = () => {
             <CardTitle tag="h3">SIGN UP</CardTitle>
           </CardHeader>
           <CardBody className="d-flex justify-content-center">
-            <Form className="w-100 mx-4" onSubmit={submitHandler}>
+            <Form
+              className="w-100 mx-4"
+              onSubmit={submitHandler}
+              id="registrationForm"
+            >
               <Row>
                 <Col md={6}>
                   <FormGroup>
@@ -212,10 +221,17 @@ const Register = () => {
                   {alert}
                 </Alert>
               )}
-              {success && (
-                <Alert onClose={alertHandler} severity="success" className="my-2">
-                  Registration Successful!
-                </Alert>
+              {success && openHandler && (
+                <>
+                  <Alert
+                    onClose={alertHandler}
+                    severity="success"
+                    className="my-2"
+                  >
+                    Registration Successful!
+                    <p className="mb-0 text-secondary">{message.data}</p>
+                  </Alert>
+                </>
               )}
               {error && (
                 <Alert severity="error" className="my-2">
