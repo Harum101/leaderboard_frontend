@@ -30,6 +30,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginCompany({ email, password }));
   };
+  
   useEffect(() => {
     if (companyInfo) {
       companyInfo.isAdmin ? navigate("/admin/dashboard") : navigate("/");

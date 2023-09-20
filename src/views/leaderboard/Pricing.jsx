@@ -8,7 +8,7 @@ const Pricing = () => {
   return (
     <div
       style={{
-        backgroundImage: `url("https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2655.jpg?w=740&t=st=1692168929~exp=1692169529~hmac=d522bc7d3f93579f87d44a5a46c06cecdd0a67c3b73cace4cf7fcc396cd4cc4a")`,
+        backgroundColor: "#191D2F",
         maxWidth: "100%",
         height: "100vh",
         backgroundSize: "cover",
