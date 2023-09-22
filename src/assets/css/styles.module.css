@@ -1,0 +1,20 @@
+.neonBorder {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 0.4em;
+  box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.5rem #bc13fe,
+    0 0 0.4rem #bc13fe, 0 0 1rem #bc13fe, inset 0 0 0.8rem #bc13fe;
+}
+
+#mySelect::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent; /* Set the background of the dropdown list to transparent */
+  color: white; /* Set the text color of the dropdown list to white */
+  z-index: -1; /* Push it below the select box */
+}

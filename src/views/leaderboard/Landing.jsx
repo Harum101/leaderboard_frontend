@@ -8,7 +8,7 @@ import { Col, Row } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserSkills } from "actions/adminActions/userSkillActions";
 
-//ACTIONS IMPORTS
+//ACTIONS IMPORTS 
 
 // COPYRIGHT FUNCTION
 function Copyright(props) {
