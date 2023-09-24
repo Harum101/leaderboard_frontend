@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { Card } from "reactstrap";
 import styles from "assets/css/styles.module.css";
-import empty from "assets/img/empty.png";
+import team from "assets/img/team.png";
 
 // Components
 import Appbar from "components/LeaderboardComponents/AppBar";
@@ -50,6 +50,12 @@ function Copyright(props) {
   );
 }
 
+const initialFilters = {
+  skill: "Skill",
+  level: "Level",
+  experience: "Experience",
+};
+
 const DevShowcase = () => {
   const dispatch = useDispatch();
   const allUserSkills = useSelector((state) => state.getAllUserSkills);
@@ -61,10 +67,39 @@ const DevShowcase = () => {
   const [userList, setUserList] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  // COMPONENT LEVEL STATES FOR FILTERS
-  const [skillFilter, setSkillFilter] = useState("Skill");
-  const [levelFilter, setLevelFilter] = useState("Level");
-  const [experienceFilter, setExperienceFilter] = useState("Experience");
+
+  // COMPONENT LEVEL STATE FOR FILTERS
+  const [filters, setFilters] = useState(initialFilters);
+
+  const handleFilterChange = (filterType, value) => {
+    if (value === initialFilters[filterType]) {
+      // Skip filtering if the default value is selected
+      return;
+    }
+    setFilters({
+      ...filters,
+      [filterType]: value,
+    });
+  };
+
+  const filteredUsers = allUserSkills.users.filter((unit) => {
+    if (
+      filters.skill !== initialFilters.skill &&
+      unit.skill.skill_name !== filters.skill
+    )
+      return false;
+    if (
+      filters.level !== initialFilters.level &&
+      unit.skill_level !== filters.level
+    )
+      return false;
+    if (
+      filters.experience !== initialFilters.experience &&
+      unit.user.years_of_experience !== filters.experience
+    )
+      return false;
+    return true;
+  });
 
   const clearUserList = (event) => {
     event.stopPropagation();
@@ -74,8 +109,7 @@ const DevShowcase = () => {
   useEffect(() => {
     dispatch(getAllUserSkills());
     dispatch(listSkills());
-    console.log(skillFilter, levelFilter, experienceFilter);
-  }, [dispatch, experienceFilter, levelFilter, skillFilter]);
+  }, [dispatch, filters]);
 
   return (
     <div
@@ -104,11 +138,11 @@ const DevShowcase = () => {
                     color: "white",
                     marginRight: "7px",
                   }}
-                  value={skillFilter}
-                  onChange={(e) => setSkillFilter(e.target.value)}
+                  value={filters.skill}
+                  onChange={(e) => handleFilterChange("skill", e.target.value)}
                 >
-                  <option value="" selected hidden>
-                    {skillFilter}
+                  <option value={null} selected hidden>
+                    {filters.skill}
                   </option>
                   {skillsList.skills.map((skill) => (
                     <option
@@ -132,11 +166,11 @@ const DevShowcase = () => {
                     color: "white",
                     marginRight: "7px",
                   }}
-                  value={levelFilter}
-                  onChange={(e) => setLevelFilter(e.target.value)}
+                  value={filters.level}
+                  onChange={(e) => handleFilterChange("level", e.target.value)}
                 >
-                  <option value="" selected hidden>
-                    {levelFilter}
+                  <option value={null} selected hidden>
+                    {filters.level}
                   </option>
                   <option style={{ color: "black" }}>Beginner</option>
                   <option style={{ color: "black" }}>Intermediate</option>
@@ -151,11 +185,13 @@ const DevShowcase = () => {
                     backgroundColor: "transparent",
                     color: "white",
                   }}
-                  value={experienceFilter}
-                  onChange={(e) => setExperienceFilter(e.target.value)}
+                  value={filters.experience}
+                  onChange={(e) =>
+                    handleFilterChange("experience", e.target.value)
+                  }
                 >
-                  <option value="" selected hidden>
-                    {experienceFilter}
+                  <option value={null} selected hidden>
+                    {filters.experience}
                   </option>
                   <option value={1} style={{ color: "black" }}>
                     1 Year
@@ -170,9 +206,7 @@ const DevShowcase = () => {
                 <div className="d-flex justify-content-center align-items-center">
                   <IconButton
                     onClick={() => {
-                      setSkillFilter("Skill");
-                      setExperienceFilter("Experience");
-                      setLevelFilter("Level");
+                      setFilters(initialFilters);
                     }}
                   >
                     <Refresh
@@ -194,9 +228,35 @@ const DevShowcase = () => {
             >
               {/* CODE FOR DEVELOPER CARDS */}
               <Row className="m-3">
-                {allUserSkills.users.map((entry, index) => (
+                {filteredUsers.map((entry, index) => (
                   <Col md={4} key={entry.user._id}>
-                    <Card className={`mt-3 mb-0 ${styles.neonBorder}`}>
+                    <Card
+                      className={`mt-3 mb-0 ${
+                        entry.rank === "S"
+                          ? userList.some(
+                              (list) => list.user._id === entry.user._id
+                            )
+                            ? styles.disabledBorder
+                            : styles.neonBorder
+                          : styles.nonNeon
+                      }`}
+                    >
+                      {userList.some(
+                        (list) => list.user._id === entry.user._id
+                      ) && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                            zIndex: 1,
+                          }}
+                        ></div>
+                      )}
+
                       <Row className="m-1">
                         <Col md={4} className="d-flex align-items-center">
                           <img
@@ -223,8 +283,8 @@ const DevShowcase = () => {
                             {entry.skill_level}
                           </p>
                           <p className="mb-0">
-                            <span style={{ fontWeight: "bold" }}>Score:</span>{" "}
-                            {entry.score}
+                            <span style={{ fontWeight: "bold" }}>Rank:</span>{" "}
+                            {entry.rank}
                           </p>
                         </Col>
                         <Col md={1} className="px-0">
@@ -334,9 +394,11 @@ const DevShowcase = () => {
               </List>
             ) : (
               <div>
-                <img src={empty} style={{ width: "10rem" }} alt="empty" />
-                <h6 className="d-flex justify-content-center text-secondary mt-3">
-                  YOUR LIST IS EMPTY
+                <div className="d-flex justify-content-center">
+                  <img src={team} style={{ width: "10rem" }} alt="empty" />
+                </div>
+                <h6 className="text-center text-secondary mt-3">
+                  YOUR SELECTED TEAM WILL BE DISPLAYED HERE
                 </h6>
               </div>
             )}

@@ -26,6 +26,9 @@ const Appbar = () => {
   const logoutHandler = () => {
     dispatch(logoutCompany());
   };
+  const navigationHandler = () => {
+    navigate("/admin/dashboard");
+  };
 
   return (
     <AppBar
@@ -44,13 +47,13 @@ const Appbar = () => {
         </Link>
         <Nav className="d-flex ml-auto">
           <NavLink
-            to="#"
+            to="/home"
             className="nav-NavLink text-white px-2 mx-1 d-flex align-items-center"
           >
             <strong>Features</strong>
           </NavLink>
           <NavLink
-            to="/devshowcase"
+            to="/"
             className="nav-NavLink text-white px-2 mx-1 d-flex align-items-center"
           >
             <strong>Our Developers</strong>
@@ -78,8 +81,8 @@ const Appbar = () => {
                   </DropdownItem>
                   <DropdownItem divider />
                   {companyInfo.isAdmin && (
-                    <DropdownItem onClick={() => navigate("/admin/dashboard")}>
-                      Admin Panel
+                    <DropdownItem>
+                      <Link to="/admin/dashboard">Admin Panel</Link>
                     </DropdownItem>
                   )}
                   <DropdownItem onClick={logoutHandler}>Log Out</DropdownItem>

@@ -10,12 +10,12 @@ import Verification from "views/leaderboard/Verfication";
 const LeaderboardRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
+      <Route path="/home" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/authCom/:id/verify/:token" element={<Verification />} />
       <Route path="/pricing" element={<Pricing />} />
-      <Route path="/devshowcase" element={<DevShowcase />} />
+      <Route path="/" element={<DevShowcase />} />
     </Routes>
   );
 };

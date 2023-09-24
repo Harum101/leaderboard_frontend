@@ -1,9 +1,20 @@
 .neonBorder {
   border: 2px solid #fff;
   border-radius: 5px;
-  padding: 0.4em;
+  /* padding: 0.4em; */
   box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.5rem #bc13fe,
     0 0 0.4rem #bc13fe, 0 0 1rem #bc13fe, inset 0 0 0.8rem #bc13fe;
+}
+
+.disabledBorder {
+  border: 2px solid #ddd; 
+  border-radius: 5px;
+  box-shadow: none; 
+}
+
+.nonNeon {
+  padding: 0.2rem;
+  border-radius: 5px;
 }
 
 #mySelect::after {
@@ -18,3 +29,13 @@
   color: white; /* Set the text color of the dropdown list to white */
   z-index: -1; /* Push it below the select box */
 }
+
+/* .disabledCard {
+  position: "absolute";
+  top: 0;
+  left: 0;
+  width: "100%";
+  height: "100%";
+  background-color: "rgba(0, 0, 0, 0.5)";
+  z-index: 1;
+} */
