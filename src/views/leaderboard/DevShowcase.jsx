@@ -28,6 +28,7 @@ import {
   ListItemButton,
   Tooltip,
 } from "@mui/material";
+import Timer from "components/LeaderboardComponents/Timer";
 
 //ACTIONS IMPORTS
 
@@ -101,6 +102,10 @@ const DevShowcase = () => {
     return true;
   });
 
+  // TIMER
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 600);
+
   const clearUserList = (event) => {
     event.stopPropagation();
     setUserList([]);
@@ -116,13 +121,22 @@ const DevShowcase = () => {
       style={{
         backgroundColor: "#191D2F",
         maxWidth: "100%",
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <Appbar />
       <Container fluid>
-        <Row style={{ height: "90vh", marginLeft: "1.8rem" }}>
+        <Row style={{ marginLeft: "1.8rem" }}>
           <Col md={10}>
+            <Row
+              className="d-flex justify-content-end align-items-center my-2 mt-4"
+              style={{ marginRight: "1.5rem" }}
+            >
+              <h6 className="text-white mx-3 my-0 px-3">
+                Time till next hackathon:
+              </h6>
+              <Timer expiryTimestamp={time} />
+            </Row>
             <Row className="my-2 mt-4" style={{ marginRight: "1rem" }}>
               <Col md={6}>
                 <h4 className="my-0 text-white">Our Developers</h4>
@@ -218,11 +232,11 @@ const DevShowcase = () => {
               </Col>
             </Row>
             <div
-              className="mb-2"
+              className="mb-3"
               style={{
                 backgroundColor: "#2D3044",
                 borderRadius: "2px",
-                height: "75vh",
+                minHeight: "75vh",
                 marginRight: "1.5rem",
               }}
             >
