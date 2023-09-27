@@ -73,6 +73,12 @@ function Sidebar(props) {
               <p>Forms</p>
             </NavLink>
           </li>
+          <li className={isActive("/admin/hackathon")}>
+            <NavLink to="/admin/hackathon" className="nav-NavLink">
+              <i className="nc-icon nc-time-alarm" />
+              <p>Hackathon</p>
+            </NavLink>
+          </li>
         </Nav>
       </div>
     </div>

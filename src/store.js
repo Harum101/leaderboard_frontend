@@ -25,6 +25,9 @@ import {
   verificationReducer,
   companyLoginReducer,
 } from "reducers/leaderboardReducers/authReducers";
+import { hackathonCreateReducer } from "reducers/adminReducers/hackathonReducers";
+import { hackathonDeleteReducer } from "reducers/adminReducers/hackathonReducers";
+import { hackathonGetReducer } from "reducers/adminReducers/hackathonReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -40,6 +43,9 @@ const reducers = combineReducers({
   companyRegister: companyRegisterReducer,
   verification: verificationReducer,
   companyLogin: companyLoginReducer,
+  hackathonCreate: hackathonCreateReducer,
+  hackathonGet: hackathonGetReducer,
+  hackathonDelete: hackathonDeleteReducer,
 });
 
 const companyInfoFromStorage = localStorage.getItem("companyInfo")

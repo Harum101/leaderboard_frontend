@@ -29,6 +29,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import Timer from "components/LeaderboardComponents/Timer";
+import { getHackathon } from "actions/adminActions/hackathonActions";
 
 //ACTIONS IMPORTS
 
@@ -62,7 +63,7 @@ const DevShowcase = () => {
   const allUserSkills = useSelector((state) => state.getAllUserSkills);
   const skillsList = useSelector((state) => state.skillsList);
   const { companyInfo } = useSelector((state) => state.companyLogin);
-  //   const users = allUserSkills.users.sort((a, b) => b.score - a.score);
+  const { hackathon } = useSelector((state) => state.hackathonGet);
 
   // COMPONENT LEVEL STATES
   const [userList, setUserList] = useState([]);
@@ -114,6 +115,7 @@ const DevShowcase = () => {
   useEffect(() => {
     dispatch(getAllUserSkills());
     dispatch(listSkills());
+    dispatch(getHackathon());
   }, [dispatch, filters]);
 
   return (
@@ -132,10 +134,11 @@ const DevShowcase = () => {
               className="d-flex justify-content-end align-items-center my-2 mt-4"
               style={{ marginRight: "1.5rem" }}
             >
-              <h6 className="text-white mx-3 my-0 px-3">
-                Time till next hackathon:
-              </h6>
-              <Timer expiryTimestamp={time} />
+              {Object.keys(hackathon).length !== 0 && (
+                <>
+                  <Timer hackathon={hackathon} />
+                </>
+              )}
             </Row>
             <Row className="my-2 mt-4" style={{ marginRight: "1rem" }}>
               <Col md={6}>
