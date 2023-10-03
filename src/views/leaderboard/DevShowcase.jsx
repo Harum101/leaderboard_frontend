@@ -14,6 +14,7 @@ import {
 import { Card } from "reactstrap";
 import styles from "assets/css/styles.module.css";
 import team from "assets/img/team.png";
+import xforce from "assets/img/xforce2.png";
 
 // Components
 import Appbar from "components/LeaderboardComponents/AppBar";
@@ -141,8 +142,13 @@ const DevShowcase = () => {
               )}
             </Row>
             <Row className="my-2 mt-4" style={{ marginRight: "1rem" }}>
-              <Col md={6}>
-                <h4 className="my-0 text-white">Our Developers</h4>
+              <Col md={6} className="d-flex align-items-center">
+                {/* <h4 className="my-0 text-white">Our Developers</h4> */}
+                <img
+                  src={xforce}
+                  style={{ width: "200px", margin: "0px", padding: "0px" }}
+                  alt="x-force"
+                />
               </Col>
               <Col md={6} className="d-flex justify-content-end me-1">
                 {/* SKILL INPUT */}
