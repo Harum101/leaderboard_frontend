@@ -33,7 +33,13 @@ export const getHackathon = () => async (dispatch) => {
 };
 
 export const createHackathon =
-  ({ hackathonDate }) =>
+  ({
+    hackathonTitle,
+    hackathonDate,
+    hackathonDescription,
+    targetAudience,
+    hackathonPrize,
+  }) =>
   async (dispatch) => {
     try {
       dispatch({ type: HDATE_CREATE_REQUEST });
@@ -43,7 +49,17 @@ export const createHackathon =
         },
       };
       console.log(hackathonDate);
-      await axios.post("/hackathon/create", { hackathonDate }, config);
+      await axios.post(
+        "/hackathon/create",
+        {
+          hackathonTitle,
+          hackathonDate,
+          hackathonDescription,
+          targetAudience,
+          hackathonPrize,
+        },
+        config
+      );
 
       dispatch({
         type: HDATE_CREATE_SUCCESS,

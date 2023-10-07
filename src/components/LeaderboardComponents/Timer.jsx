@@ -1,21 +1,36 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useTimer } from "react-timer-hook";
 import { Card, Col, Row } from "reactstrap";
+import HackathonDialog from "./HackathonDialog";
 
 const Timer = ({ hackathon }) => {
   const [timeExpired, setTimeExpired] = useState(false);
+  const [open, setOpen] = useState(false);
   const expiryTimestamp = new Date(hackathon.hackathonDate);
-  console.log(expiryTimestamp);
 
   const { seconds, minutes, hours, days } = useTimer({
     expiryTimestamp,
     onExpire: () => setTimeExpired(true),
   });
 
+  const handleDialog = (e) => {
+    e.preventDefault();
+    setOpen(true);
+  };
+
   return (
     <>
-      <h6 className="text-white mx-3 my-0 px-3">Time till next hackathon:</h6>
+      {" "}
+      {open && (
+        <HackathonDialog open={open} setOpen={setOpen} hackathon={hackathon} />
+      )}
+      <Link onClick={handleDialog}>
+        <h6 className="text-white mx-3 my-0 px-3">
+          {hackathon.hackathonTitle} (Countdown) :
+        </h6>
+      </Link>
       <div style={{ textAlign: "center", marginRight: "1rem" }}>
         <div className="text-white" style={{ fontSize: "25px" }}>
           <Row>

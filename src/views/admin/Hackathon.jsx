@@ -13,10 +13,6 @@ import {
   Form,
   FormGroup,
 } from "reactstrap";
-// COMPONENTS
-import SkillForm from "components/Forms/SkillForm";
-import UserForm from "components/Forms/UserForm";
-import BadgeForm from "components/Forms/BadgeForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createHackathon,
@@ -26,19 +22,38 @@ import { Alert } from "@mui/material";
 import DateTime from "components/AdminComponents/DateTime";
 
 const Forms = () => {
+  //FORM ENTRY DATA
   const [hackathonDate, setHackathonDate] = useState("");
+  const [hackathonTitle, setHackathonTitle] = useState("");
+  const [hackathonDescription, setHackathonDescription] = useState("");
+  const [targetAudience, setTargetAudience] = useState("");
+  const [hackathonPrize, setHackathonPrize] = useState("");
+
   const { success, error } = useSelector((state) => state.hackathonCreate);
   const { hackathon, loading } = useSelector((state) => state.hackathonGet);
+
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createHackathon({ hackathonDate }));
+    dispatch(
+      createHackathon({
+        hackathonTitle,
+        hackathonDate,
+        hackathonDescription,
+        targetAudience,
+        hackathonPrize,
+      })
+    );
   };
   const alertHandler = () => {
     dispatch(getHackathon());
     dispatch({ type: HDATE_CREATE_RESET });
+    setHackathonTitle("");
     setHackathonDate("");
+    setHackathonDescription("");
+    setHackathonPrize("");
+    setTargetAudience("");
   };
   useEffect(() => {
     dispatch(getHackathon());
@@ -62,6 +77,16 @@ const Forms = () => {
                   <Row>
                     <Col md={6}>
                       <FormGroup>
+                        <label>Title</label>
+                        <Input
+                          placeholder="Title"
+                          type="text"
+                          value={hackathonTitle}
+                          required
+                          onChange={(e) => setHackathonTitle(e.target.value)}
+                        />
+                      </FormGroup>
+                      <FormGroup>
                         <label>
                           Date/Time (Changing this will delete the current
                           hackathon time):
@@ -72,6 +97,38 @@ const Forms = () => {
                           value={hackathonDate}
                           required
                           onChange={(e) => setHackathonDate(e.target.value)}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <label>Description</label>
+                        <Input
+                          placeholder="Description"
+                          type="textarea"
+                          value={hackathonDescription}
+                          required
+                          onChange={(e) =>
+                            setHackathonDescription(e.target.value)
+                          }
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <label>Target Audience</label>
+                        <Input
+                          placeholder="Target Audience"
+                          type="text"
+                          value={targetAudience}
+                          required
+                          onChange={(e) => setTargetAudience(e.target.value)}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <label>Prize</label>
+                        <Input
+                          placeholder="Prize"
+                          type="text"
+                          value={hackathonPrize}
+                          required
+                          onChange={(e) => setHackathonPrize(e.target.value)}
                         />
                       </FormGroup>
                       {success && (
@@ -109,7 +166,15 @@ const Forms = () => {
                     >
                       <div className="d- flex justify-content-center">
                         {!loading ? (
-                          <DateTime hackathon={hackathon?.hackathonDate} />
+                          <DateTime
+                            hackathonTitle={hackathon?.hackathonTitle}
+                            hackathonDate={hackathon?.hackathonDate}
+                            hackathonDescription={
+                              hackathon?.hackathonDescription
+                            }
+                            targetAudience={hackathon?.targetAudience}
+                            hackathonPrize={hackathon?.hackathonPrize}
+                          />
                         ) : (
                           <h5>Loading...</h5>
                         )}

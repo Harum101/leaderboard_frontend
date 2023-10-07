@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { Card } from "reactstrap";
 import styles from "assets/css/styles.module.css";
-import team from "assets/img/team.png";
+import team from "assets/img/superheroes.png";
 import xforce from "assets/img/xforce2.png";
 
 // Components
@@ -31,6 +31,7 @@ import {
 } from "@mui/material";
 import Timer from "components/LeaderboardComponents/Timer";
 import { getHackathon } from "actions/adminActions/hackathonActions";
+import DeveloperDialog from "components/LeaderboardComponents/DeveloperDailog";
 
 //ACTIONS IMPORTS
 
@@ -68,6 +69,8 @@ const DevShowcase = () => {
 
   // COMPONENT LEVEL STATES
   const [userList, setUserList] = useState([]);
+  const [userDialog, setUserDialog] = useState("");
+  const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
@@ -111,6 +114,11 @@ const DevShowcase = () => {
   const clearUserList = (event) => {
     event.stopPropagation();
     setUserList([]);
+  };
+
+  const dialogHandler = (user) => {
+    setUserDialog(user);
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -279,7 +287,13 @@ const DevShowcase = () => {
                           }}
                         ></div>
                       )}
-
+                      {userDialog && (
+                        <DeveloperDialog
+                          open={open}
+                          setOpen={setOpen}
+                          user={userDialog}
+                        />
+                      )}
                       <Row className="m-1">
                         <Col md={4} className="d-flex align-items-center">
                           <img
@@ -294,9 +308,21 @@ const DevShowcase = () => {
                           />
                         </Col>
                         <Col md={7} className="px-0">
-                          <p style={{ fontWeight: "bold" }} className="mb-0">
-                            {entry.user.name}
-                          </p>
+                          <Link
+                            underline="hover"
+                            color="text.primary"
+                            sx={{
+                              "&:hover": {
+                                color: "text.primary",
+                                cursor: "pointer",
+                              },
+                            }}
+                            onClick={() => dialogHandler(entry)}
+                          >
+                            <p style={{ fontWeight: "bold" }} className="mb-0">
+                              {entry.user.name}
+                            </p>
+                          </Link>
                           <p className="mb-0">
                             <span style={{ fontWeight: "bold" }}>Skill:</span>{" "}
                             {entry.skill.skill_name}
@@ -347,6 +373,9 @@ const DevShowcase = () => {
           >
             {userList.length !== 0 ? (
               <List className="mx-2">
+                <Row className="d-flex justify-content-center text-white">
+                  <h5>YOUR TEAM</h5>
+                </Row>
                 {userList.map((entry) => (
                   <>
                     <ListItem
