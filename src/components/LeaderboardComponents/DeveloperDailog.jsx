@@ -7,8 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Col, Row } from "reactstrap";
+import { Col, Progress, Row } from "reactstrap";
 import AccordionComponent from "./AccordionComponent";
+import unravel from "assets/img/backgrounds/unravel.png";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -29,7 +30,10 @@ const DeveloperDialog = ({ open, setOpen, user }) => {
       <BootstrapDialog
         PaperProps={{
           sx: {
-            backgroundColor: '#191D2F',
+            backgroundImage: `url(${unravel})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             // background: "linear-gradient(-20deg, #2b5876 0%, #4e4376 100%)"
           },
         }}
@@ -37,9 +41,13 @@ const DeveloperDialog = ({ open, setOpen, user }) => {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+        <DialogTitle
+          sx={{ m: 0 }}
+          style={{ padding: "4rem", paddingTop: "3rem", paddingBottom: "1rem" }}
+          id="customized-dialog-title"
+        >
           <Row>
-            <Col md={3}>
+            <Col md={3} className="d-flex d-sm-flex justify-content-center">
               <img
                 src={`/images/profilePictures/${user.user.profile_image}`}
                 style={{
@@ -50,13 +58,30 @@ const DeveloperDialog = ({ open, setOpen, user }) => {
                 alt="profile"
               />
             </Col>
-            <Col md={5}>
+            <Col
+              md={5}
+              className="mt-2 d-flex d-sm-flex justify-content-center"
+            >
               <Row>
-                <h6 className="mb-0 text-white">{user.user.name}</h6>
+                <Col md={12} className="d-flex justify-content-center">
+                  <h6 className="mb-0 text-white">{user.user.name}</h6>
+                </Col>
+                <Col
+                  md={12}
+                  className="mb-0 text-white d-flex justify-content-center"
+                >
+                  <p>{user.skill.skill_name} Developer</p>
+                </Col>
               </Row>
-              <Row className="mb-0 text-white">
-                <p>{user.skill.skill_name} Developer</p>
-              </Row>
+            </Col>
+            <Col md={4}>
+              <p className="text-white mb-0 text-right" style={{}}>
+                Score: {user.score}
+              </p>
+              <Progress color="danger" value={(user.score / 150) * 100} />
+              <p className="text-white mb-0 mt-3 text-right ">
+                Rank: {user.rank}
+              </p>
             </Col>
           </Row>
         </DialogTitle>
@@ -72,7 +97,7 @@ const DeveloperDialog = ({ open, setOpen, user }) => {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers className="text-white">
+        <DialogContent dividers className="text-white px-5">
           {/* <Typography gutterBottom>
             Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
             dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta

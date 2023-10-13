@@ -7,9 +7,9 @@
 }
 
 .disabledBorder {
-  border: 2px solid #ddd; 
+  border: 2px solid #ddd;
   border-radius: 5px;
-  box-shadow: none; 
+  box-shadow: none;
 }
 
 .nonNeon {
@@ -39,3 +39,44 @@
   background-color: "rgba(0, 0, 0, 0.5)";
   z-index: 1;
 } */
+
+/* styles.module.css */
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2d3044;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 2px;
+  min-height: 75vh;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.profileImage {
+  width: 80px;
+  height: 65px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.userName {
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.userInfo {
+  font-weight: bold;
+  color: #fff;
+}
+
+.addButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

@@ -26,53 +26,61 @@ const Timer = ({ hackathon }) => {
       {open && (
         <HackathonDialog open={open} setOpen={setOpen} hackathon={hackathon} />
       )}
-      <Link onClick={handleDialog}>
-        <h6 className="text-white mx-3 my-0 px-3">
-          {hackathon.hackathonTitle} (Countdown) :
-        </h6>
-      </Link>
-      <div style={{ textAlign: "center", marginRight: "1rem" }}>
-        <div className="text-white" style={{ fontSize: "25px" }}>
-          <Row>
-            <Col className="p-0" style={{ maxWidth: "40px" }}>
-              <Card style={{ width: "40px", marginBottom: "0px" }}>{days}</Card>
-            </Col>
-            <Col
-              className="d-flex justify-content-center py-0 px-1"
-              style={{ maxWidth: "5px" }}
-            >
-              :
-            </Col>
-            <Col className="p-0" style={{ maxWidth: "40px" }}>
-              <Card style={{ width: "40px", marginBottom: "0px" }}>
-                {hours}
-              </Card>
-            </Col>
-            <Col
-              className="d-flex justify-content-center py-0 px-1"
-              style={{ maxWidth: "5px" }}
-            >
-              :
-            </Col>
-            <Col className="p-0" style={{ maxWidth: "40px" }}>
-              <Card style={{ width: "40px", marginBottom: "0px" }}>
-                <span>{minutes}</span>
-              </Card>
-            </Col>
-            <Col
-              className="d-flex justify-content-center py-0 px-1"
-              style={{ maxWidth: "5px" }}
-            >
-              :
-            </Col>
-            <Col className="p-0" style={{ maxWidth: "40px" }}>
-              <Card style={{ width: "40px", marginBottom: "0px" }}>
-                {seconds}
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      </div>
+      <Row>
+        <Col className="p-0" md={6}>
+          <Link onClick={handleDialog}>
+            <h6 className="text-right text-white mb-0">
+              {hackathon.hackathonTitle} : (Countdown)
+            </h6>
+          </Link>
+        </Col>
+        <Col className="d-flex justify-content-end" md={6}>
+          <div style={{ textAlign: "center", marginRight: "1rem" }}>
+            <div className="text-white" style={{ fontSize: "25px" }}>
+              <Row>
+                <Col className="p-0" style={{ maxWidth: "40px" }}>
+                  <Card style={{ width: "40px", marginBottom: "0px" }}>
+                    {days}
+                  </Card>
+                </Col>
+                <Col
+                  className="d-flex justify-content-center py-0 px-1"
+                  style={{ maxWidth: "5px" }}
+                >
+                  :
+                </Col>
+                <Col className="p-0" style={{ maxWidth: "40px" }}>
+                  <Card style={{ width: "40px", marginBottom: "0px" }}>
+                    {hours}
+                  </Card>
+                </Col>
+                <Col
+                  className="d-flex justify-content-center py-0 px-1"
+                  style={{ maxWidth: "5px" }}
+                >
+                  :
+                </Col>
+                <Col className="p-0" style={{ maxWidth: "40px" }}>
+                  <Card style={{ width: "40px", marginBottom: "0px" }}>
+                    <span>{minutes}</span>
+                  </Card>
+                </Col>
+                <Col
+                  className="d-flex justify-content-center py-0 px-1"
+                  style={{ maxWidth: "5px" }}
+                >
+                  :
+                </Col>
+                <Col className="p-0" style={{ maxWidth: "40px" }}>
+                  <Card style={{ width: "40px", marginBottom: "0px" }}>
+                    {seconds}
+                  </Card>
+                </Col>
+              </Row>
+            </div>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 };

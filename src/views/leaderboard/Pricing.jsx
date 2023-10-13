@@ -10,7 +10,7 @@ const Pricing = () => {
       style={{
         backgroundColor: "#191D2F",
         maxWidth: "100%",
-        height: "100vh",
+        minHeight: "100vh",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
@@ -21,7 +21,7 @@ const Pricing = () => {
         <div className="m-5">
           <Row>
             <Col md={3} className="px-1">
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} className="mb-2">
                 <CardContent>
                   <Typography
                     variant="h5"
@@ -59,7 +59,7 @@ const Pricing = () => {
               </Card>
             </Col>
             <Col md={3} className="px-1">
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} className="mb-2">
                 <CardContent>
                   <Typography
                     variant="h5"
@@ -97,7 +97,7 @@ const Pricing = () => {
               </Card>
             </Col>
             <Col md={3} className="px-1">
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} className="mb-2">
                 <CardContent>
                   <Typography
                     variant="h5"
@@ -135,7 +135,7 @@ const Pricing = () => {
               </Card>
             </Col>
             <Col md={3} className="px-1">
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} className="mb-2">
                 <CardContent>
                   <Typography
                     variant="h5"

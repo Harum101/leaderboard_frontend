@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   background: {
-    backgroundColor: "#2D3044",
+    backgroundColor: "#4308a1",
     // backgroundColor: "#505e80",
   },
   body: {
@@ -47,7 +47,7 @@ const AccordionComponent = ({ user }) => {
         className={classes.background}
       >
         <AccordionSummary
-          expandIcon={<ExpandMore />}
+          expandIcon={<ExpandMore sx={{ color: "white" }} />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >

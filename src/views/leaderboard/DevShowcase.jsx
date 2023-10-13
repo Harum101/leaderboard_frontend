@@ -150,7 +150,7 @@ const DevShowcase = () => {
               )}
             </Row>
             <Row className="my-2 mt-4" style={{ marginRight: "1rem" }}>
-              <Col md={6} className="d-flex align-items-center">
+              <Col xs={12} sm={12} md={6} className="d-flex align-items-center">
                 {/* <h4 className="my-0 text-white">Our Developers</h4> */}
                 <img
                   src={xforce}
@@ -158,82 +158,98 @@ const DevShowcase = () => {
                   alt="x-force"
                 />
               </Col>
-              <Col md={6} className="d-flex justify-content-end me-1">
-                {/* SKILL INPUT */}
-                <Input
-                  type="select"
-                  id="filter"
-                  style={{
-                    width: "7rem",
-                    backgroundColor: "transparent",
-                    color: "white",
-                    marginRight: "7px",
-                  }}
-                  value={filters.skill}
-                  onChange={(e) => handleFilterChange("skill", e.target.value)}
-                >
-                  <option value={null} selected hidden>
-                    {filters.skill}
-                  </option>
-                  {skillsList.skills.map((skill) => (
-                    <option
-                      key={skill.skill_name}
-                      value={skill.skill_name}
+              <Col
+                xs={12}
+                sm={12}
+                md={6}
+                className="d-flex justify-content-end me-1"
+              >
+                <Row>
+                  <Col className="p-1" md={4}>
+                    {/* SKILL INPUT */}
+                    <Input
+                      type="select"
+                      id="filter"
                       style={{
-                        color: "black",
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        color: "white",
+                        marginRight: "7px",
                       }}
+                      value={filters.skill}
+                      onChange={(e) =>
+                        handleFilterChange("skill", e.target.value)
+                      }
                     >
-                      {skill.skill_name}
-                    </option>
-                  ))}
-                </Input>
-                {/* SKILL LEVEL INPUT */}
-                <Input
-                  type="select"
-                  id="filter"
-                  style={{
-                    width: "8.5rem",
-                    backgroundColor: "transparent",
-                    color: "white",
-                    marginRight: "7px",
-                  }}
-                  value={filters.level}
-                  onChange={(e) => handleFilterChange("level", e.target.value)}
-                >
-                  <option value={null} selected hidden>
-                    {filters.level}
-                  </option>
-                  <option style={{ color: "black" }}>Beginner</option>
-                  <option style={{ color: "black" }}>Intermediate</option>
-                  <option style={{ color: "black" }}>Experienced</option>
-                </Input>
-                {/* EXPERIENCE INPUT */}
-                <Input
-                  type="select"
-                  id="filter"
-                  style={{
-                    width: "8rem",
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                  value={filters.experience}
-                  onChange={(e) =>
-                    handleFilterChange("experience", e.target.value)
-                  }
-                >
-                  <option value={null} selected hidden>
-                    {filters.experience}
-                  </option>
-                  <option value={1} style={{ color: "black" }}>
-                    1 Year
-                  </option>
-                  <option value={2} style={{ color: "black" }}>
-                    2 Years
-                  </option>
-                  <option value={3} style={{ color: "black" }}>
-                    3 Years
-                  </option>
-                </Input>
+                      <option value={null} selected hidden>
+                        {filters.skill}
+                      </option>
+                      {skillsList.skills.map((skill) => (
+                        <option
+                          key={skill.skill_name}
+                          value={skill.skill_name}
+                          style={{
+                            color: "black",
+                          }}
+                        >
+                          {skill.skill_name}
+                        </option>
+                      ))}
+                    </Input>
+                  </Col>
+                  <Col className="p-1" md={4}>
+                    {/* SKILL LEVEL INPUT */}
+                    <Input
+                      type="select"
+                      id="filter"
+                      style={{
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        color: "white",
+                      }}
+                      value={filters.level}
+                      onChange={(e) =>
+                        handleFilterChange("level", e.target.value)
+                      }
+                    >
+                      <option value={null} selected hidden>
+                        {filters.level}
+                      </option>
+                      <option style={{ color: "black" }}>Beginner</option>
+                      <option style={{ color: "black" }}>Intermediate</option>
+                      <option style={{ color: "black" }}>Experienced</option>
+                    </Input>
+                  </Col>
+                  <Col className="p-1" md={4}>
+                    {/* EXPERIENCE INPUT */}
+                    <Input
+                      type="select"
+                      id="filter"
+                      style={{
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        color: "white",
+                      }}
+                      value={filters.experience}
+                      onChange={(e) =>
+                        handleFilterChange("experience", e.target.value)
+                      }
+                    >
+                      <option value={null} selected hidden>
+                        {filters.experience}
+                      </option>
+                      <option value={1} style={{ color: "black" }}>
+                        1 Year
+                      </option>
+                      <option value={2} style={{ color: "black" }}>
+                        2 Years
+                      </option>
+                      <option value={3} style={{ color: "black" }}>
+                        3 Years
+                      </option>
+                    </Input>
+                  </Col>
+                </Row>
                 <div className="d-flex justify-content-center align-items-center">
                   <IconButton
                     onClick={() => {
@@ -260,7 +276,7 @@ const DevShowcase = () => {
               {/* CODE FOR DEVELOPER CARDS */}
               <Row className="m-3">
                 {filteredUsers.map((entry, index) => (
-                  <Col md={4} key={entry.user._id}>
+                  <Col sm={12} md={6} lg={4} key={entry.user._id}>
                     <Card
                       className={`mt-3 mb-0 ${
                         entry.rank === "S"
@@ -295,19 +311,29 @@ const DevShowcase = () => {
                         />
                       )}
                       <Row className="m-1">
-                        <Col md={4} className="d-flex align-items-center">
+                        <Col
+                          xs={4}
+                          sm={4}
+                          md={4}
+                          className="d-flex align-items-center justify-content-center"
+                          style={{
+                            padding: "8px",
+                          }}
+                        >
                           <img
                             src={`/images/profilePictures/${entry.user.profile_image}`}
                             style={{
-                              width: "80px",
-                              height: "65px",
+                              maxWidth: "75px",
+                              maxHeight: "70px",
+                              minWidth: "75px",
+                              minHeight: "70px",
                               borderRadius: "100%",
                               objectFit: "cover",
                             }}
                             alt="profile"
                           />
                         </Col>
-                        <Col md={7} className="px-0">
+                        <Col xs={7} sm={7} md={7} className="px-0">
                           <Link
                             underline="hover"
                             color="text.primary"
@@ -336,7 +362,7 @@ const DevShowcase = () => {
                             {entry.rank}
                           </p>
                         </Col>
-                        <Col md={1} className="px-0">
+                        <Col xs={1} sm={1} md={1} className="px-0">
                           <Tooltip
                             title={companyInfo ? "Add To List" : "Login First"}
                           >
@@ -385,7 +411,7 @@ const DevShowcase = () => {
                     >
                       <Row>
                         <Col
-                          md={4}
+                          xs={4} md={4}
                           className="d-flex justify-content-center align-items-center p-0"
                         >
                           <img
@@ -400,7 +426,7 @@ const DevShowcase = () => {
                           />
                         </Col>
                         <Col
-                          md={6}
+                          xs={6} md={6}
                           style={{ paddingLeft: "5px", paddingRight: "0px" }}
                         >
                           <h6 style={{ color: "white" }} className="mb-0">
@@ -410,7 +436,7 @@ const DevShowcase = () => {
                             {entry.skill.skill_name}
                           </p>
                         </Col>
-                        <Col md={2} className="d-flex align-items-center px-0">
+                        <Col xs={2} md={2} className="d-flex align-items-center px-0">
                           <IconButton
                             onClick={() => {
                               setUserList(
@@ -446,6 +472,7 @@ const DevShowcase = () => {
               </List>
             ) : (
               <div>
+                <h5 className="text-center text-white">YOUR TEAM</h5>
                 <div className="d-flex justify-content-center">
                   <img src={team} style={{ width: "10rem" }} alt="empty" />
                 </div>
