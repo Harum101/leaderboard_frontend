@@ -400,7 +400,7 @@ const DevShowcase = () => {
             {userList.length !== 0 ? (
               <List className="mx-2">
                 <Row className="d-flex justify-content-center text-white">
-                  <h5>YOUR TEAM</h5>
+                  <h5>MY DREAM TEAM</h5>
                 </Row>
                 {userList.map((entry) => (
                   <>
@@ -472,7 +472,7 @@ const DevShowcase = () => {
               </List>
             ) : (
               <div>
-                <h5 className="text-center text-white">YOUR TEAM</h5>
+                <h5 className="text-center text-white">MY DREAM TEAM</h5>
                 <div className="d-flex justify-content-center">
                   <img src={team} style={{ width: "10rem" }} alt="empty" />
                 </div>

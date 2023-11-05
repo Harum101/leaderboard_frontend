@@ -79,6 +79,12 @@ function Sidebar(props) {
               <p>Hackathon</p>
             </NavLink>
           </li>
+          <li className={isActive("/admin/achievements")}>
+            <NavLink to="/admin/achievements" className="nav-NavLink">
+              <i className="nc-icon nc-trophy" />
+              <p>Achievements</p>
+            </NavLink>
+          </li>
         </Nav>
       </div>
     </div>

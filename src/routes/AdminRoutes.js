@@ -5,6 +5,7 @@ import Forms from "views/admin/Forms";
 import Hackathon from "views/admin/Hackathon";
 import UpdateUser from "views/admin/UpdateUser";
 import AdminLayout from "components/AdminComponents/AdminLayout";
+import Achievements from "views/admin/Achievements";
 
 const AdminRoutes = () => {
   // const mainPanel = React.useRef();
@@ -40,6 +41,14 @@ const AdminRoutes = () => {
         element={
           <AdminLayout>
             <Hackathon />
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/admin/achievements"
+        element={
+          <AdminLayout>
+            <Achievements />
           </AdminLayout>
         }
       />
