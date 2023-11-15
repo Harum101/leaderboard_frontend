@@ -9,6 +9,7 @@ import { listSkills } from "actions/adminActions/skillActions";
 
 import UpdateUserSkillForm from "components/Forms/UpdateUserSkillForm";
 import UpdateUserBadgeForm from "components/Forms/UpdateUserBadgeForm";
+import AchievementsForm from "components/Forms/AchievementsForm";
 
 const UpdateUser = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,13 @@ const UpdateUser = () => {
             {/* --------------- BADGES FORM --------------- */}
             <Col md="6">
               <UpdateUserBadgeForm />
+            </Col> 
+            <Divider />
+            {/* --------------- ACHIEVEMENTS FORM --------------- */}
+            <Col md="12">
+              <AchievementsForm />
             </Col>
+
           </Row>
         </CardBody>
       </Card>

@@ -1,5 +1,5 @@
-import { Divider } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardTitle,
@@ -12,10 +12,49 @@ import {
   Form,
   FormGroup,
 } from "reactstrap";
+import { Divider } from "@mui/material";
+import { listSkills } from "actions/adminActions/skillActions";
+import {
+  postMainTitle,
+  fetchAchievements,
+  postSubTitle,
+} from "actions/adminActions/achievementActions";
 
 const Achievements = () => {
-  const submitHandlerFirst = () => {};
-  const submitHandlerSecond = () => {};
+  const dispatch = useDispatch();
+  const [skillId, setSkillId] = useState();
+  const [subSkillId, setSubSkillId] = useState();
+  const [mainTitle, setMainTitle] = useState("");
+  const [mainTitleId, setMainTitleId] = useState();
+  const [subTitle, setSubTitle] = useState("");
+  const [result, setResult] = useState();
+
+  const submitHandlerFirst = (e) => {
+    e.preventDefault();
+    dispatch(postMainTitle({ skillId, mainTitle }));
+  };
+  const submitHandlerSecond = (e) => {
+    e.preventDefault();
+    dispatch(postSubTitle({ subSkillId, mainTitleId, subTitle }));
+  }; 
+ 
+  const handleChange = (value) => {
+    const result = achievements.find(
+      (achievements) => achievements.skillId === value
+    );
+    setResult(result);
+  };
+
+  const { skills } = useSelector((state) => state.skillsList);
+  const { achievements } = useSelector((state) => state.achievementsGet);
+
+  useEffect(() => {
+    dispatch(listSkills());
+    dispatch(fetchAchievements());
+    if (subSkillId) {
+      handleChange(subSkillId);
+    }
+  }, [dispatch, subSkillId]);
 
   return (
     <div className="content">
@@ -44,17 +83,17 @@ const Achievements = () => {
                           <label>Select Skill</label>
                           <Input
                             type="select"
-                            // value={skillId}
-                            // onChange={(e) => setSkillId(e.target.value)}
+                            value={skillId}
+                            onChange={(e) => setSkillId(e.target.value)}
                           >
                             <option value="" selected hidden>
                               Select Skill
                             </option>
-                            {/* {skillsList.skills.map((skill) => (
+                            {skills.map((skill) => (
                               <option key={skill._id} value={skill._id}>
                                 {skill.skill_name}
                               </option>
-                            ))} */}
+                            ))}
                           </Input>
                         </FormGroup>
                       </Col>
@@ -64,11 +103,9 @@ const Achievements = () => {
                           <Input
                             placeholder="Main Title"
                             type="text"
-                            // value={hackathonDescription}
+                            value={mainTitle}
                             required
-                            // onChange={(e) =>
-                            //   setHackathonDescription(e.target.value)
-                            // }
+                            onChange={(e) => setMainTitle(e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -86,70 +123,75 @@ const Achievements = () => {
 
                   <Divider />
                   <h5>Add Sub Parts</h5>
-                  {/* <Form onSubmit={submitHandlerFirst} encType="multipart/form-data"> */}
-                  <Row>
-                    <Col md={4}>
-                      <FormGroup>
-                        <label>Select Skill</label>
-                        <Input
-                          type="select"
-                          // value={skillId}
-                          // onChange={(e) => setSkillId(e.target.value)}
-                        >
-                          <option value="" selected hidden>
-                            Select Skill
-                          </option>
-                          {/* {skillsList.skills.map((skill) => (
+                  <Form
+                    onSubmit={submitHandlerSecond}
+                    encType="multipart/form-data"
+                  >
+                    <Row>
+                      <Col md={4}>
+                        <FormGroup>
+                          <label>Select Skill</label>
+                          <Input
+                            type="select"
+                            value={subSkillId}
+                            onChange={(e) => setSubSkillId(e.target.value)}
+                          >
+                            <option value="" selected hidden>
+                              Select Skill
+                            </option>
+                            {skills.map((skill) => (
                               <option key={skill._id} value={skill._id}>
                                 {skill.skill_name}
                               </option>
-                            ))} */}
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                    <Col md={5}>
-                      <FormGroup>
-                        <label>Select Achievement</label>
-                        <Input
-                          type="select"
-                          // value={skillId}
-                          // onChange={(e) => setSkillId(e.target.value)}
+                            ))}
+                          </Input>
+                        </FormGroup>
+                      </Col>
+                      <Col md={5}>
+                        <FormGroup>
+                          <label>Select Achievement</label>
+                          <Input
+                            type="select"
+                            value={mainTitleId}
+                            onChange={(e) => setMainTitleId(e.target.value)}
+                          >
+                            <option value="" selected hidden>
+                              Select Achievement
+                            </option>
+                            {result &&
+                              result.achievements.map((entry) => (
+                                <option key={entry._id} value={entry._id}>
+                                  {entry.mainTitle}
+                                </option>
+                              ))}
+                          </Input>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={9}>
+                        <FormGroup>
+                          <label>Subtitle</label>
+                          <Input
+                            placeholder="Add Subtitle"
+                            type="text"
+                            value={subTitle}
+                            required
+                            onChange={(e) => setSubTitle(e.target.value)}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={3} className="d-flex align-items-center">
+                        <Button
+                          className="btn-round mb-0"
+                          color="primary"
+                          type="submit"
                         >
-                          <option value="" selected hidden>
-                            Select Achievement
-                          </option>
-                          {/* {skillsList.skills.map((skill) => (
-                              <option key={skill._id} value={skill._id}>
-                                {skill.skill_name}
-                              </option>
-                            ))} */}
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={9}>
-                      <FormGroup>
-                        <label>Subtitle</label>
-                        <Input
-                          placeholder="Add Subtitle"
-                          type="text"
-                          // value={hackathonPrize}
-                          required
-                          // onChange={(e) => setHackathonPrize(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col md={3} className="d-flex align-items-center">
-                      <Button
-                        className="btn-round mb-0"
-                        color="primary"
-                        type="submit"
-                      >
-                        Add
-                      </Button>
-                    </Col>
-                  </Row>
+                          Add
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Form>
                   {/* {success && (
                         <Alert
                           onClose={alertHandler}
@@ -168,7 +210,6 @@ const Achievements = () => {
                           {error}
                         </Alert>
                       )} */}
-
                 </Col>
                 <Col
                   md={6}

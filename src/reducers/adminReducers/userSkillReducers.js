@@ -2,6 +2,9 @@ import {
   ALL_USERS_SKILLS_REQUEST,
   ALL_USERS_SKILLS_SUCCESS,
   ALL_USERS_SKILLS_FAIL,
+  USER_SKILL_REQUEST,
+  USER_SKILL_SUCCESS,
+  USER_SKILL_FAIL,
 } from "constants/leaderboardConstants";
 
 import {
@@ -36,6 +39,19 @@ export const getAllUserSkillsReducer = (state = { users: [] }, action) => {
     case ALL_USERS_SKILLS_SUCCESS:
       return { loading: false, users: action.payload };
     case ALL_USERS_SKILLS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getSingleUserSkillReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_SKILL_REQUEST:
+      return { loading: true };
+    case USER_SKILL_SUCCESS:
+      return { loading: false, user: action.payload };
+    case USER_SKILL_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

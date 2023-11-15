@@ -3,6 +3,9 @@ import {
   ALL_USERS_SKILLS_SUCCESS,
   ALL_USERS_SKILLS_REQUEST,
   ALL_USERS_SKILLS_FAIL,
+  USER_SKILL_SUCCESS,
+  USER_SKILL_REQUEST,
+  USER_SKILL_FAIL,
 } from "constants/leaderboardConstants";
 import {
   USER_SKILL_UPDATE_REQUEST,
@@ -73,3 +76,26 @@ export const getAllUserSkills = () => async (dispatch) => {
     });
   }
 };
+
+export const getUserSkill =
+  ({ userId }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: USER_SKILL_REQUEST });
+
+      const { data } = await axios.get(`/users/${userId}/get-skills`);
+
+      dispatch({
+        type: USER_SKILL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_SKILL_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

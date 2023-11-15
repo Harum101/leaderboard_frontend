@@ -25,9 +25,16 @@ import {
   verificationReducer,
   companyLoginReducer,
 } from "reducers/leaderboardReducers/authReducers";
-import { hackathonCreateReducer } from "reducers/adminReducers/hackathonReducers";
-import { hackathonDeleteReducer } from "reducers/adminReducers/hackathonReducers";
-import { hackathonGetReducer } from "reducers/adminReducers/hackathonReducers";
+import {
+  hackathonCreateReducer,
+  hackathonDeleteReducer,
+  hackathonGetReducer,
+} from "reducers/adminReducers/hackathonReducers";
+import { mainTitleCreateReducer } from "reducers/adminReducers/achievementReducers";
+import { achievementGetReducer } from "reducers/adminReducers/achievementReducers";
+import { subTitleCreateReducer } from "reducers/adminReducers/achievementReducers";
+import { getSingleUserSkillReducer } from "reducers/adminReducers/userSkillReducers";
+import { achievementAddReducer } from "reducers/adminReducers/achievementReducers";
 
 const reducers = combineReducers({
   usersList: usersListReducer,
@@ -40,12 +47,17 @@ const reducers = combineReducers({
   skillUpdate: skillUpdateReducer,
   userSkillsUpdate: usersSkillsUpdateReducer,
   getAllUserSkills: getAllUserSkillsReducer,
+  getSingleUserSkill: getSingleUserSkillReducer,
   companyRegister: companyRegisterReducer,
   verification: verificationReducer,
   companyLogin: companyLoginReducer,
   hackathonCreate: hackathonCreateReducer,
   hackathonGet: hackathonGetReducer,
   hackathonDelete: hackathonDeleteReducer,
+  mainTitleCreate: mainTitleCreateReducer,
+  subTitleCreate: subTitleCreateReducer,
+  achievementsGet: achievementGetReducer,
+  achievementsAdd: achievementAddReducer,
 });
 
 const companyInfoFromStorage = localStorage.getItem("companyInfo")
