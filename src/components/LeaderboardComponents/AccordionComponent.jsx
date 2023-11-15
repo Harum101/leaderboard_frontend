@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { ExpandMore } from "@mui/icons-material";
+import { Circle, ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -41,28 +41,31 @@ const AccordionComponent = ({ user }) => {
 
   return (
     <div className={classes.root}>
-      <Accordion
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-        className={classes.background}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMore sx={{ color: "white" }} />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
+      {user.user.achievements.map((entry) => (
+        <Accordion
+          expanded={expanded === "panel1"}
+          onChange={handleChange("panel1")}
+          className={`${classes.background} mt-3`}
         >
-          <Typography className={classes.heading}>
-            Skill: {user.skill.skill_name}
-          </Typography>
-          <Typography className={classes.secondaryHeading}></Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.body}>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMore sx={{ color: "white" }} />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <Typography className={classes.heading}>
+              {entry.mainTitle}
+            </Typography>
+            <Typography className={classes.secondaryHeading}></Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.body}>
+            {entry.subparts.map((subEntry) => (
+              <Typography>
+                <Circle sx={{ fontSize: "10px" }} /> {subEntry.subTitle}
+              </Typography>
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      ))}
       {/* <Accordion
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}
