@@ -12,41 +12,70 @@ import {
   Form,
   FormGroup,
 } from "reactstrap";
-import { Divider } from "@mui/material";
+import { Alert, Divider } from "@mui/material";
 import { listSkills } from "actions/adminActions/skillActions";
 import {
   postMainTitle,
   fetchAchievements,
   postSubTitle,
 } from "actions/adminActions/achievementActions";
+import { TITLE_CREATE_RESET } from "constants/adminConstants";
+import { SUBTITLE_CREATE_RESET } from "constants/adminConstants";
 
 const Achievements = () => {
   const dispatch = useDispatch();
   const [skillId, setSkillId] = useState();
+  const [skillName, setSkillName] = useState();
   const [subSkillId, setSubSkillId] = useState();
   const [mainTitle, setMainTitle] = useState("");
   const [mainTitleId, setMainTitleId] = useState();
   const [subTitle, setSubTitle] = useState("");
   const [result, setResult] = useState();
 
+  const { skills } = useSelector((state) => state.skillsList);
+  const { achievements } = useSelector((state) => state.achievementsGet);
+  const { mainTitlePostSuccess, mainTitlePostMessage } = useSelector(
+    (state) => state.mainTitleCreate
+  );
+  const { subTitlePostSuccess, subTitlePostMessage } = useSelector(
+    (state) => state.subTitleCreate
+  );
+
   const submitHandlerFirst = (e) => {
     e.preventDefault();
     dispatch(postMainTitle({ skillId, mainTitle }));
   };
+
   const submitHandlerSecond = (e) => {
     e.preventDefault();
-    dispatch(postSubTitle({ subSkillId, mainTitleId, subTitle }));
-  }; 
- 
+    if (subSkillId && mainTitleId && subTitle) {
+      dispatch(postSubTitle({ subSkillId, mainTitleId, subTitle }));
+    }
+  };
+
   const handleChange = (value) => {
     const result = achievements.find(
       (achievements) => achievements.skillId === value
     );
+    const skill_name = skills.find((skills) => skills._id === value);
     setResult(result);
+    setSkillName(skill_name);
+    console.log(result);
   };
 
-  const { skills } = useSelector((state) => state.skillsList);
-  const { achievements } = useSelector((state) => state.achievementsGet);
+  const handleClose = () => {
+    if (mainTitle) {
+      dispatch({ type: TITLE_CREATE_RESET });
+      setSkillId();
+      setMainTitle("");
+    }
+    if (subTitle) {
+      dispatch({ type: SUBTITLE_CREATE_RESET });
+      setSubSkillId();
+      setMainTitleId("");
+      setSubTitle("");
+    }
+  };
 
   useEffect(() => {
     dispatch(listSkills());
@@ -63,15 +92,18 @@ const Achievements = () => {
           <Card className="card-user">
             <CardHeader>
               <Row>
-                <Col md={6}>
+                <Col md={8}>
                   <CardTitle tag="h5">ACHIEVEMENTS</CardTitle>
+                </Col>
+                <Col md={4}>
+                  <CardTitle tag="h5">DISPLAY</CardTitle>
                 </Col>
               </Row>
             </CardHeader>
+            <Divider />
             <CardBody>
               <Row>
                 <Col md={8}>
-                  <Divider />
                   <h5>Add Title</h5>
                   <Form
                     onSubmit={submitHandlerFirst}
@@ -118,6 +150,17 @@ const Achievements = () => {
                           Add
                         </Button>
                       </Col>
+                      <Col md={12}>
+                        {mainTitlePostSuccess && (
+                          <Alert
+                            onClose={handleClose}
+                            severity="success"
+                            className="my-2"
+                          >
+                            {mainTitlePostMessage.message}
+                          </Alert>
+                        )}
+                      </Col>
                     </Row>
                   </Form>
 
@@ -153,6 +196,7 @@ const Achievements = () => {
                           <Input
                             type="select"
                             value={mainTitleId}
+                            required
                             onChange={(e) => setMainTitleId(e.target.value)}
                           >
                             <option value="" selected hidden>
@@ -191,45 +235,45 @@ const Achievements = () => {
                         </Button>
                       </Col>
                     </Row>
-                  </Form>
-                  {/* {success && (
+                    {subTitlePostSuccess && (
+                      <Row>
                         <Alert
-                          onClose={alertHandler}
+                          onClose={handleClose}
                           severity="success"
                           className="my-2"
                         >
-                          Hackathon Created Successfully!
+                          {subTitlePostMessage.message}
                         </Alert>
-                      )}
-                      {error && (
-                        <Alert
-                          onClose={alertHandler}
-                          severity="danger"
-                          className="my-2"
-                        >
-                          {error}
-                        </Alert>
-                      )} */}
+                      </Row>
+                    )}
+                  </Form>
                 </Col>
-                <Col
-                  md={6}
-                  className="d-flex justify-content-center align-items-center"
-                >
-                  {/* <div className="d- flex justify-content-center">
-                        {!loading ? (
-                          <DateTime
-                            hackathonTitle={hackathon?.hackathonTitle}
-                            hackathonDate={hackathon?.hackathonDate}
-                            hackathonDescription={
-                              hackathon?.hackathonDescription
-                            }
-                            targetAudience={hackathon?.targetAudience}
-                            hackathonPrize={hackathon?.hackathonPrize}
-                          />
-                        ) : (
-                          <h5>Loading...</h5>
-                        )}
-                      </div> */}
+                <Col md={4}>
+                  <Row>
+                    <Col md={12}>
+                      {skillName ? (
+                        <>
+                          <h5>{`${skillName.skill_name} Achievements`}</h5>
+                          {result ? (
+                            result.achievements.map((entry) => {
+                              return (
+                                <>
+                                  <h6>{entry.mainTitle}</h6>
+                                  {entry.subparts.map((subEntry) => {
+                                    return <p>{subEntry.subTitle}</p>;
+                                  })}
+                                </>
+                              );
+                            })
+                          ) : (
+                            <p>NONE ADDED YET</p>
+                          )}
+                        </>
+                      ) : (
+                        <p>SELECT A SKILL FROM THE SUBPARTS SECTION</p>
+                      )}
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </CardBody>

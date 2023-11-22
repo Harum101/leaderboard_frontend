@@ -57,9 +57,9 @@ const AccordionComponent = ({ user }) => {
             </Typography>
             <Typography className={classes.secondaryHeading}></Typography>
           </AccordionSummary>
-          <AccordionDetails className={classes.body}>
+          <AccordionDetails className={`${classes.body} pt-0`}>
             {entry.subparts.map((subEntry) => (
-              <Typography>
+              <Typography style={{ marginLeft: "1rem" }}>
                 <Circle sx={{ fontSize: "10px" }} /> {subEntry.subTitle}
               </Typography>
             ))}

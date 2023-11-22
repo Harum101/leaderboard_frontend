@@ -2,12 +2,14 @@ import {
   TITLE_CREATE_REQUEST,
   TITLE_CREATE_SUCCESS,
   TITLE_CREATE_FAIL,
+  TITLE_CREATE_RESET,
   ACHIEVEMENTS_GET_SUCCESS,
   ACHIEVEMENTS_GET_FAIL,
   ACHIEVEMENTS_GET_REQUEST,
   SUBTITLE_CREATE_REQUEST,
   SUBTITLE_CREATE_SUCCESS,
   SUBTITLE_CREATE_FAIL,
+  SUBTITLE_CREATE_RESET,
   USER_ADD_ACHIEVEMENT_REQUEST,
   USER_ADD_ACHIEVEMENT_SUCCESS,
   USER_ADD_ACHIEVEMENT_FAIL,
@@ -25,6 +27,8 @@ export const mainTitleCreateReducer = (state = {}, action) => {
       };
     case TITLE_CREATE_FAIL:
       return { mainTitleError: action.payload };
+    case TITLE_CREATE_RESET:
+      return {};
     default:
       return state;
   }
@@ -41,6 +45,8 @@ export const subTitleCreateReducer = (state = {}, action) => {
       };
     case SUBTITLE_CREATE_FAIL:
       return { subTitleError: action.payload };
+    case SUBTITLE_CREATE_RESET:
+      return {};
     default:
       return state;
   }
@@ -64,7 +70,7 @@ export const achievementAddReducer = (state = {}, action) => {
     case USER_ADD_ACHIEVEMENT_REQUEST:
       return {};
     case USER_ADD_ACHIEVEMENT_SUCCESS:
-      return { success: true };
+      return { success: true, data: action.payload };
     case USER_ADD_ACHIEVEMENT_FAIL:
       return { success: false, error: action.payload };
     case USER_ADD_ACHIEVEMENT_RESET:

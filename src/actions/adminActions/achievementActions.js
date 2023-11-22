@@ -60,8 +60,7 @@ export const postSubTitle =
           "content-type": "application/json",
         },
       };
-      console.log(skillId, mainTitleId, subTitle);
-      await axios.post(
+      const { data } = await axios.post(
         "/achievements/createSubTitle",
         {
           skillId,
@@ -73,6 +72,7 @@ export const postSubTitle =
 
       dispatch({
         type: SUBTITLE_CREATE_SUCCESS,
+        payload: data,
       });
     } catch (error) {
       dispatch({
@@ -108,7 +108,6 @@ export const fetchAchievements = () => async (dispatch) => {
 
 export const addAchievements =
   ({ userId, mainTitle, subTitle }) =>
-  
   async (dispatch) => {
     try {
       dispatch({ type: USER_ADD_ACHIEVEMENT_REQUEST });

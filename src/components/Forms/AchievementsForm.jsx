@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material";
+import { Alert, Divider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -18,21 +18,30 @@ import {
 import { fetchAchievements } from "actions/adminActions/achievementActions";
 import { getUserSkill } from "actions/adminActions/userSkillActions";
 import { addAchievements } from "actions/adminActions/achievementActions";
+import { USER_ADD_ACHIEVEMENT_RESET } from "constants/adminConstants";
 
 const AchievementsForm = () => {
   const { id: userId } = useParams();
   const { user } = useSelector((state) => state.getSingleUserSkill);
   const { achievements } = useSelector((state) => state.achievementsGet);
+  const { success, data } = useSelector((state) => state.achievementsAdd);
   const dispatch = useDispatch();
 
-  const [mainTitle, setMainTitle] = useState();
-  const [subTitle, setSubTitle] = useState();
+  const [mainTitle, setMainTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(addAchievements({ userId, mainTitle, subTitle }));
   };
 
+  const handleClose = () => {
+    if (mainTitle) {
+      dispatch({ type: USER_ADD_ACHIEVEMENT_RESET });
+      setMainTitle("");
+      setSubTitle("");
+    }
+  };
   // Funtion to get achievements for a specific skill
 
   useEffect(() => {
@@ -118,60 +127,23 @@ const AchievementsForm = () => {
                     </Button>
                   </Col>
                 </Row>
-                {/* <Row>
-                  <Col md={9}>
-                    <FormGroup>
-                      <label>Subtitle</label>
-                      <Input
-                        placeholder="Add Subtitle"
-                        type="text"
-                        //   value={subTitle}
-                        required
-                        //   onChange={(e) => setSubTitle(e.target.value)}
-                      />
-                    </FormGroup>
-                  </Col>
-                  
-                </Row> */}
               </Form>
-              {/* {success && (
-              <Alert
-                onClose={alertHandler}
-                severity="success"
-                className="my-2"
-              >
-                Hackathon Created Successfully!
-              </Alert>
-            )}
-            {error && (
-              <Alert
-                onClose={alertHandler}
-                severity="danger"
-                className="my-2"
-              >
-                {error}
-              </Alert>
-            )} */}
             </Col>
             <Col
               md={6}
               className="d-flex justify-content-center align-items-center"
             >
-              {/* <div className="d- flex justify-content-center">
-              {!loading ? (
-                <DateTime
-                  hackathonTitle={hackathon?.hackathonTitle}
-                  hackathonDate={hackathon?.hackathonDate}
-                  hackathonDescription={
-                    hackathon?.hackathonDescription
-                  }
-                  targetAudience={hackathon?.targetAudience}
-                  hackathonPrize={hackathon?.hackathonPrize}
-                />
-              ) : (
-                <h5>Loading...</h5>
+              {success && (
+                <Row>
+                  <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    className="my-2"
+                  >
+                    {data.message}
+                  </Alert>
+                </Row>
               )}
-            </div> */}
             </Col>
           </Row>
         </CardBody>
